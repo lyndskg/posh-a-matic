@@ -41,6 +41,7 @@ def get_webdriver(driver_name):
         raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
     return driver
 
+
 def setup_driver(driver_name):
     return get_web_driver(driver_name)
 
@@ -223,24 +224,6 @@ def simulate_human_interaction():
 def rt(d):
     times = np.random.rand(1000)+np.random.rand(1000)+d
     return np.random.choice(times, 1).tolist()[0]
-
-
-def get_webdriver(driver_name):
-    if driver_name == '0' or driver_name.lower() == 'chrome':
-        chrome_options = ChromeOptions()
-        driver = wirewebdriver.Chrome(options=chrome_options)
-    elif driver_name == '1' or driver_name.lower() == 'safari':
-        safari_options = SafariOptions()
-        driver = wirewebdriver.Safari(options=safari_options)
-    elif driver_name == '2' or driver_name.lower() == 'firefox':
-        firefox_options = FirefoxOptions()
-        driver = wirewebdriver.Firefox(options=firefox_options)
-    elif driver_name == '3' or driver_name.lower() == 'edge':
-        edge_options = EdgeOptions()
-        driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=edge_options)
-    else:
-        raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
-    return driver
 
 
 def login(debugger=False):
