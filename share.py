@@ -182,7 +182,7 @@ def login(debugger=False):
         pass
 
 
-def deploy_share_war(driver, n=3, order=True, random_subset=0):
+def deploy_share(driver, n=3, order=True, random_subset=0):
     logging.info("[*] DEPLOYING SHARE WAR")
     
     try:
@@ -395,7 +395,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
         try:
             # Start Share War Loop
             quit_input = False
-            deploy_share_war(driver, number, order, random_subset)
+            deploy_share(driver, number, order, random_subset)
 
             if quit_input:
                 break
@@ -473,7 +473,7 @@ if __name__=="__main__":
 
     parser = argparse.ArgumentParser(
         description=textwrap.dedent('''
-        [*] Help file for share_war.py
+        [*] Help file for share.py
             from the poshmark_sharing repository:
             https://github.com/jmausolf/poshmark_sharing
         '''),
