@@ -39,7 +39,7 @@ To install `Python3` requirements, you may run `pip install -r requirements.txt`
 
 ## Setup
 
-### <ins>Git Clone</ins>
+### <ins>Git Clone</ins>:
 
 First clone the repository in terminal:
 * `git clone https://github.com/lyndskg/poshamatic`
@@ -49,7 +49,7 @@ Change directories to enter the local repository:
 
 &nbsp;
 
-### <ins>User Credentials</ins>
+### <ins>User Credentials</ins>:
 
 You will need to create a `credentials.py` file.
 
@@ -66,7 +66,7 @@ Edit the text in quotes to your actual username and password. Save the file and 
 
 &nbsp;
 
-### <ins>Firefox and Other Web Drivers</ins>
+### <ins>Firefox and Other Web Drivers</ins>:
 
 The default webdriver for this script is Firefox, which was the original web browser used in writing this script and executing the code. From a development perspective Firefox offers a better interface to inspect the HTML code needed in writing the scraper.
 
@@ -91,7 +91,7 @@ __*<ins>Note</ins>:*__ If you have several versions of `python`, you will need t
 
 &nbsp;
 
-## <ins>Advanced Options</ins>:
+## <ins>Advanced Options</ins>
 
 There are a variety of optional arguments for the script, including timing, closet scroll size, closet ordering, the account to share, and the webdriver. To display the full range of command line arguments type `python share.py --help`. For convenience, these options are described below.
 
