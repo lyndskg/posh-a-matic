@@ -23,24 +23,25 @@ DRIVER_SAFARI = 1
 DRIVER_FIREFOX = 2
 DRIVER_EDGE = 3
 
-def get_web_driver(driver_option):
-    if driver_option == DRIVER_CHROME:
+def get_webdriver(driver_name):
+    if driver_name == '0' or driver_name.lower() == 'chrome':
         chrome_options = ChromeOptions()
-        return wirewebdriver.Chrome(options=chrome_options)
-    elif driver_option == DRIVER_SAFARI:
+        driver = wirewebdriver.Chrome(options=chrome_options)
+    elif driver_name == '1' or driver_name.lower() == 'safari':
         safari_options = SafariOptions()
-        return wirewebdriver.Safari(options=safari_options)
-    elif driver_option == DRIVER_FIREFOX:
+        driver = wirewebdriver.Safari(options=safari_options)
+    elif driver_name == '2' or driver_name.lower() == 'firefox':
         firefox_options = FirefoxOptions()
-        return wirewebdriver.Firefox(options=firefox_options)
-    elif driver_option == DRIVER_EDGE:
+        driver = wirewebdriver.Firefox(options=firefox_options)
+    elif driver_name == '3' or driver_name.lower() == 'edge':
         edge_options = EdgeOptions()
-        return wirewebdriver.Edge(options=edge_options)
+        driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=edge_options)
     else:
-        raise ValueError("Invalid driver option.")
+        raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
+    return driver
 
-def setup_driver(driver_option):
-    return get_web_driver(driver_option)
+def setup_driver(driver_name):
+    return get_web_driver(driver_name)
 
 
 # Add the manual_captcha_handler function
@@ -221,6 +222,24 @@ def simulate_human_interaction():
 def rt(d):
     times = np.random.rand(1000)+np.random.rand(1000)+d
     return np.random.choice(times, 1).tolist()[0]
+
+
+def get_webdriver(driver_name):
+    if driver_name == '0' or driver_name.lower() == 'chrome':
+        chrome_options = ChromeOptions()
+        driver = wirewebdriver.Chrome(options=chrome_options)
+    elif driver_name == '1' or driver_name.lower() == 'safari':
+        safari_options = SafariOptions()
+        driver = wirewebdriver.Safari(options=safari_options)
+    elif driver_name == '2' or driver_name.lower() == 'firefox':
+        firefox_options = FirefoxOptions()
+        driver = wirewebdriver.Firefox(options=firefox_options)
+    elif driver_name == '3' or driver_name.lower() == 'edge':
+        edge_options = EdgeOptions()
+        driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=edge_options)
+    else:
+        raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
+    return driver
 
 
 def login(debugger=False):
@@ -538,43 +557,17 @@ if __name__=="__main__":
 
     args = parser.parse_args()
 
-    # Ensure valid driver option is provided
-    if args.driver not in [DRIVER_CHROME, DRIVER_SAFARI, DRIVER_FIREFOX, DRIVER_EDGE]:
-        print("[*] ERROR Driver argument value not supported!")
-        sys.exit()
-
-    # Ensure time is non-negative
-    if args.time < 0:
-        print("[*] ERROR Invalid time value! Time must be non-negative.")
-        sys.exit()
-
-    # Create the driver instance outside the loop
-    driver = setup_driver(args.driver)
-
-    # Start the main loop
-    main_loop(driver, args.time, args.number, args.order, args.random_subset, args.account, args.bypass)
-
-    args = parser.parse_args()
-    
-    driver = None
-
+    ##################################
+    ## Set up Webdriver
+    ##################################
+   
     try:
-        if args.driver == '0' or args.driver == 'Safari':
-            driver = webdriver.Safari()
-        elif args.driver == '1' or args.driver == 'Chrome':
-            driver = webdriver.Chrome()
-        elif args.driver == '2' or args.driver == 'Firefox':
-            driver = webdriver.Firefox()
-        elif args.driver == '3' or args.driver == 'Edge':
-            driver = webdriver.Edge()
-        else:
-            print(textwrap.dedent('''
-                [*] ERROR Driver argument value not supported!
-                    Check the help (-h) argument for supported values.
-                '''))
-            sys.exit()
-
-
+        driver = get_webdriver(args.driver)
+    except ValueError as e:
+        print(textwrap.dedent('''
+            [*] ERROR {}
+            '''.format(e)))
+        sys.exit()
     
     ##################################
     ## Run Script
@@ -582,48 +575,32 @@ if __name__=="__main__":
 
     ## Start Share War Loop
     starttime = time.time()
+
     while True:
-        ## Time Delay: While Loop
-        random_loop_time = rt(args.time)
-        
-        # Run main application
-        quit_input = False
-        deploy_share_war(driver, args.number, args.order, args.random_subset)
-        
-        if quit_input is False:
-            time.sleep(rt(10))
-        
-            # Time Delay: While Loop
-            time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
-        else:
-            driver.quit()
-            sys.exit()
+            try:
+                # Start Share War Loop
+                quit_input = False
+                deploy_share_war(args.number, args.order, args.random_subset)
     
-        except NameError:
-            print(textwrap.dedent('''
-                [*] ERROR You don't have the web driver for the argument
-                    given ({}). You need to download it. Go here for
-                    installation info:
-                    https://selenium-python.readthedocs.io/installation.html#drivers
-                '''.format(args.driver)))
-            sys.exit()
+                if quit_input:
+                    break
     
-        except Exception as e:
-            print(textwrap.dedent('''
-                [*] ERROR The selected driver may not be set up correctly. 
-                    Ensure you can access it from the command line and 
-                    try again. 
-                    {}
-                '''.format(e)))
-            sys.exit()
+                time.sleep(rt(10))
     
-        else:
-            pass
-            
-        finally:
-            if driver is not None:
+                driver.quit()
+    
+                # Time Delay: While Loop
+                random_loop_time = rt(args.time)
+                time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
+    
+            except Exception as e:
+                print(textwrap.dedent('''
+                    [*] ERROR: {}
+                    '''.format(e)))
                 driver.quit()
                 sys.exit()
-                
+    
+        driver.quit()
+        sys.exit()
        
 
