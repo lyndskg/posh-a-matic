@@ -23,7 +23,8 @@ Once the script is executed, it will share the requested listings every 120 minu
 * [Selenium](http://selenium-python.readthedocs.io)==3.141.0+
 * [Numpy](https://numpy.org/)==1.15.2+
 
-To install Python3 requirements, you may run `pip install -r requirements.txt`. You will also need a recent version of Firefox (or another webdriver of your choice). If using Firefox, you will also likely need to install `geckodriver`, which on macOS can be accomplished using [Homebrew](https://brew.sh/) with the command `brew install geckodriver` in terminal.
+
+To install `Python3` requirements, you may run `pip install -r requirements.txt`. You will also need a recent version of Firefox (or another webdriver of your choice). If using Firefox, you will also likely need to install `geckodriver`, which on macOS can be accomplished using [Homebrew](https://brew.sh/) with the command `brew install geckodriver` in terminal.
 
 &nbsp;
 
