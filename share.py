@@ -498,20 +498,50 @@ if __name__=="__main__":
             drivers may be called by either entering the name
             of the driver or entering the numeric code 
             for that driver name as follows:
-            Firefox==0, Chrome==1, Edge==2, Safari==3
+            Chrome==0, Safari==1, Firefox==2, Edge==3
 
             :: example, use Firefox:
             -d Firefox 
-            -d 0
+            -d 2
 
             :: example, use Chrome:
             -d Chrome
-            -d 1
+            -d 0
             '''))
 
     args = parser.parse_args()
 
 
+    ##################################
+    ## Set up Webdriver
+    ##################################
+    if args.driver == '0' or args.driver.lower() == 'chrome':
+        chrome_options = ChromeOptions()
+        chrome_driver = wirewebdriver.Chrome(options=chrome_options)
+        driver = webdriver.Chrome(options=chrome_options)
+
+    elif args.driver == '1' or args.driver.lower() == 'safari':
+        safari_options = SafariOptions()
+        safari_driver = wirewebdriver.Safari(options=safari_options)
+        driver = webdriver.Safari(safari_options=safari_options)
+
+    elif args.driver == '2' or args.driver.lower() == 'firefox':
+        firefox_options = FirefoxOptions()
+        firefox_driver = wirewebdriver.Firefox(options=firefox_options)
+        driver = webdriver.FireFox(options=firefox_options)
+        
+    elif args.driver == '3' or args.driver.lower() == 'edge':
+        # Set up EdgeOptions and EdgeDriverManager (if you haven't imported them yet)
+        edge_options = EdgeOptions()
+        driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=edge_options)
+
+    else:
+        print(textwrap.dedent('''
+            [*] ERROR Driver argument value not supported!
+                Check the help (-h) argument for supported values.
+            '''))
+        sys.exit()
+    
     ##################################
     ## Run Script
     ##################################
