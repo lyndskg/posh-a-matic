@@ -41,6 +41,7 @@ First clone the repository in terminal:
 Change directories to enter the local repository:
 * `cd poshamatic`
 
+&nbsp;
 
 ### <ins>User Credentials</ins>
 
