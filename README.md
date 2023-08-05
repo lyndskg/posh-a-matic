@@ -183,7 +183,7 @@ y
 ```
 
 
-This prompt will occur each time the code runs. 
+__<ins>Note</ins>:__ *This prompt will occur each time the code runs.*
 
 
 If you are confident you want to repeatedly share another users entire closet every few hours, you can bypass this prompt with the following command line option `b True`. 
