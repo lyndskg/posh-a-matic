@@ -75,9 +75,9 @@ To learn more about setting up the appropriate web driver, visit the Selenium we
 
 ------
 
-# Quick Start
+## Quick Start
 
-## Run in Terminal (Recommended)
+### Run in Terminal (Recommended)
 
 In terminal run the following command: `python share.py`, which will run the script with the default options (see below).
 
