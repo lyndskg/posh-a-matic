@@ -42,7 +42,10 @@ Change directories to enter the local repository:
 
 ### <ins>User Credentials</ins>
 
-You will need to create a `credentials.py` file. It is recommended to simply edit the `example_credentials.py` file and rename it.
+You will need to create a `credentials.py` file.
+
+
+It is recommended to simply edit the `example_credentials.py` file and rename it.
 
 ```python
 poshmark_username = "poshmarkusername"
