@@ -232,7 +232,7 @@ def login(debugger=False):
     url = "https://poshmark.com/login"
     driver.get(url)
 
-    time.sleep(rt(5))
+    time.sleep(get_random_delay(5))
 
     try:
         ## Login
@@ -242,14 +242,14 @@ def login(debugger=False):
             '''.format(poshmark_username)))
         username = driver.find_element_by_name("login_form[username_email]")
         username.send_keys(poshmark_username)
-        time.sleep(rt(5))
+        time.sleep(get_random_delay(5))
 
         password = driver.find_element_by_name("login_form[password]")
         password.send_keys(poshmark_password)
-        time.sleep(rt(5))
+        time.sleep(get_random_delay(5))
 
         password.send_keys(Keys.RETURN)
-        time.sleep(rt(5))
+        time.sleep(get_random_delay(5))
 
         ## Check for Captcha
         try:
@@ -270,7 +270,7 @@ def login(debugger=False):
             pass
  
         ## Navigate to Seller Page
-        time.sleep(rt(10))
+        time.sleep(get_random_delay(10))
         seller_page = get_seller_page_url(args.account)
         driver.get(seller_page)
 
@@ -358,7 +358,7 @@ def scroll_page(n, delay=3):
             return
         else:
             screen_heights.append(height)
-            time.sleep(rt(delay))
+            time.sleep(get_random_delay(delay))
 
 
 def get_closet_urls():
@@ -377,18 +377,18 @@ def get_closet_share_icons():
 def clicks_share_followers(share_icon, d=4.5):
 
     ## First share click
-    driver.execute_script("arguments[0].click();", share_icon); time.sleep(rt(d))
+    driver.execute_script("arguments[0].click();", share_icon); time.sleep(get_random_delay(d))
 
     ## Second share click
     share_pat = "//a[@class='pm-followers-share-link grey']"
     share_followers = driver.find_element_by_xpath(share_pat)
-    driver.execute_script("arguments[0].click();", share_followers); time.sleep(rt(d))
+    driver.execute_script("arguments[0].click();", share_followers); time.sleep(get_random_delay(d))
 
 
 def open_closet_item_url(url):
     print(url)
     driver.get(url)
-    time.sleep(rt(5))
+    time.sleep(get_random_delay(5))
 
 
 def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
@@ -407,7 +407,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
                 pass
                 
         # Time Delay: While Loop
-        random_loop_time = rt(loop_time)
+        random_loop_time = get_random_delay(loop_time)
         time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
 
     
@@ -544,6 +544,7 @@ if __name__=="__main__":
     ## Start Share War Loop
     starttime = time.time()
 
+    
     while True:
             try:
                 # Start Share  Loop
