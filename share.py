@@ -299,7 +299,7 @@ def simulate_human_interaction():
 
         # Scroll up and down
         pyautogui.scroll(3)
-        time.sleep(2)
+        time.sleep(get_random_delay(2))
         pyautogui.scroll(-3)
     except Exception as e:
         logger.warning("Error occurred during simulating human interaction: %s", e)
@@ -397,7 +397,7 @@ def get_closet_share_icons():
 def clicks_share_followers(share_icon, d=4.5):
 
     ## First share click
-    driver.execute_script("arguments[0].click();", share_icon); time.sleep(get_random_delay(d))
+    driver.execute_script("arguments[0].click();", share_icon); time.sleep(get_random_delay(get_random_delay(d))
 
     ## Second share click
     share_pat = "//a[@class='pm-followers-share-link grey']"
@@ -425,7 +425,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
 
             # Time Delay: While Loop
             random_loop_time = random(loop_time)
-            time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
+            time.sleep(get_random_delay(random_loop_time - ((time.time() - starttime) % random_loop_time)))
 
         except NoSuchElementException as e:
             # Handle NoSuchElementException
@@ -445,7 +445,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
                 pass
             else:
                 # Sleep for some time before retrying
-                time.sleep(30)
+                time.sleep(get_random_delay(30))
                 # Restart the loop
                 continue
 
