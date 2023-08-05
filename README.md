@@ -1,6 +1,6 @@
 ![](https://d2zlsagv0ouax1.cloudfront.net/assets/home_page/hp-v5-logo@2x-6003c7f00d83f4df697830d18bdcf167.png)
 
-<h1 align = "center">poshamatic</h1> 
+<h1 align = "center">posh-a-matic</h1> 
 <h4 align = "center"><em><strong><ins>Welcome to the Poshmark Sharing App</ins></strong></em></h4>
 
 &nbsp;
