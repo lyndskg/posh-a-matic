@@ -23,9 +23,9 @@ Once the script is executed, it will share the requested listings every 120 minu
 
 *You can edit the timing and other options if you desire.*
 
-&nbsp;
-
 ------
+
+&nbsp;
 
 ## Let the Share War Begin
 
@@ -43,9 +43,10 @@ To install `Python3` requirements, you may run `pip install -r requirements.txt`
 
 <p align="right"><a href="#top">(back to top)</a></p>
 
+------
+
 &nbsp;
 
-               
 ## Setup
 
 ### <ins>Git Clone</ins>:
