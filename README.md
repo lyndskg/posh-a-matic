@@ -23,7 +23,7 @@ To install Python3 requirements, you may run `pip install -r requirements.txt`. 
 #### Git Clone
 
 First clone the repository in terminal:
-* `git clone https://github.com/jmausolf/poshmark_sharing`
+* `git clone https://github.com/lyndskg/poshamatic`
 
 Change directories to enter the local repository:
 * `cd poshmark_sharing`
