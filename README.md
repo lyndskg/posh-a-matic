@@ -1,3 +1,5 @@
+<a name="top"></a>
+
 ![](https://d2zlsagv0ouax1.cloudfront.net/assets/home_page/hp-v5-logo@2x-6003c7f00d83f4df697830d18bdcf167.png)
 
 <h1 align = "center">posh-a-matic</h1> 
@@ -37,6 +39,7 @@ To install `Python3` requirements, you may run `pip install -r requirements.txt`
 
 &nbsp;
 
+<p align="right"><a href="#top>Back to top</a></p>
 ## Setup
 
 ### <ins>Git Clone</ins>:
@@ -105,12 +108,15 @@ Here are some examples:
 > - Every *four* hours: `python share.py -t 14400`
 > - Every *two* hours: `python share.py -t 7200`
 
+&nbsp;
+
 ### <ins>Closet Size</ins>:
 
 The latest version of this code will automatically scroll to the end of your active listings in your closet. You should no longer need to adjust the number of possible scrolls (default, `n` = 1000). If you desired to share only part of your closet, you could descrease the number of scrolls with the `-n` parameter:
 
 * Scroll only 1 times: `python share.py -n 1`
 
+&nbsp;
 
 ### <ins>Closet Ordering</ins>:
 
@@ -123,6 +129,7 @@ To override this option, you can reverse order the items of the closet with the 
 
 * **Reverse Original Closet Order:** `python share.py -o False`
 
+&nbsp;
 
 ### <ins>Account</ins>:
 
@@ -155,6 +162,7 @@ This prompt will occur each time the code runs.
 
 If you are confident you want to repeatedly share another users entire closet every few hours, you can bypass this prompt with the following command line option `b True`. 
 
+&nbsp;
 
 ### <ins>Random Sharing Subset</ins>:
 
@@ -164,6 +172,7 @@ If you would prefer to not share your entire closet (or another account's entire
 
 This is helpful if you would like to share some of another person's closet but not every item they have.
 
+&nbsp;
 
 ### <ins>Webdriver</ins>:
 
