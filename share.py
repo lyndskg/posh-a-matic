@@ -31,7 +31,7 @@ DRIVER_SAFARI = 1
 DRIVER_FIREFOX = 2
 DRIVER_EDGE = 3
 
-def get_webdriver(driver_name):
+def setup_driver(driver_name):
     try:
         if driver_name == '0' or driver_name.lower() == 'chrome':
             chrome_options = ChromeOptions()
@@ -55,11 +55,11 @@ def get_webdriver(driver_name):
 
 
 def setup_driver(driver_name):
-    return get_webdriver(driver_name)
+    return setup_driver(driver_name)
 
 
-# Add the manual_captcha_handler function
-def manual_captcha_handler():
+# Add the handle_manual_captcha function
+def handle_manual_captcha():
     logger.info("[*] ERROR in Share : Thwarted by Captchas")
     logger.info("[*] Please open the browser to the Poshmark login page.")
     logger.info("[*] Solve the CAPTCHA and log in as a human.")
@@ -75,8 +75,8 @@ def manual_captcha_handler():
         logger.info("[*] Exiting the script.")
         sys.exit()
 
-# Add the offer_user_quit function
-def offer_user_quit():
+# Add the prompt_user_quit function
+def prompt_user_quit():
     quit_mes = textwrap.dedent('''
         [*] if you would like to quit, enter [q]
             otherwise, enter any other key to continue
@@ -126,28 +126,21 @@ def login(debugger=False):
             captcha_fail = driver.find_element_by_xpath(captcha_pat)
             if len(str(captcha_fail)) > 100:
                 logger.info("Captcha detected. Manual intervention required.")
-                manual_captcha_handler()  # Call the manual_captcha_handler function
+                handle_manual_captcha()  # Call the handle_manual_captcha function
                 login(debugger=True)  # Retry login after manual intervention
                 return
         except NoSuchElementException:
             pass
 
 
-        # Existing code...
-
     except Exception as e:
         # Captcha Catch
-        logger.info("[*] ERROR in Share Bot: Thwarted by Captchas")
+        logger.info(textwrap.dedent('''
+            [*] ERROR in Share Bot: Thrwarted by Captchas
+                you may now attempt to login with the python debugger
+            '''))
         logger.error("Error occurred during login: %s", e)
-        offer_user_quit()
-        login(debugger=True)
-        pass
-        # Existing code...
-
-    except: Exception:
-        # Captcha Catch
-        logger.info("[*] ERROR in Share Bot: Thwarted by Captchas")
-        offer_user_quit()
+        prompt_user_quit()
         login(debugger=True)
         pass
 
@@ -169,18 +162,9 @@ def login(debugger=False):
                      pass
             else:
                 pass
-
+                
         return True
 
-    except:
-        ## Captcha Catch
-        logger.info(textwrap.dedent('''
-            [*] ERROR in Share Bot: Thrwarted by Captchas
-                you may now attempt to login with the python debugger
-            '''))
-        offer_user_quit()
-        login(debugger=True)
-        pass
 
 
 def deploy_share_bot(driver, n=3, order=True, random_subset=0):
@@ -289,8 +273,8 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
 
 
 
-# Add the simulate_human_interaction function
-def simulate_human_interaction():
+# Add the simulate_interaction function
+def simulate_interaction():
     try:
         # Simulate mouse movement
         x, y = pyautogui.position()
@@ -300,16 +284,20 @@ def simulate_human_interaction():
 
         # Scroll up and down
         pyautogui.scroll(3)
-        time.sleep(get_random_delay(2))
+        time.sleep(get_random_delay_for_interaction(2))
         pyautogui.scroll(-3)
     except Exception as e:
         logger.warning("Error occurred during simulating human interaction: %s", e)
         pass
-   
+
+
 def get_random_delay(mean_delay):
     times = np.random.rand(1000) + np.random.rand(1000) + mean_delay
     return np.random.choice(times, 1).tolist()[0]
 
+def get_random_delay_for_interaction(mean_delay):
+    times = np.random.rand(1000) + np.random.rand(1000) + mean_delay
+    return np.random.choice(times, 1).tolist()[0]
 
 
 def confirm_account_sharing(account, username):
@@ -337,7 +325,7 @@ def confirm_account_sharing(account, username):
             driver.get(seller_page)
         else:
             logger.info('[*] you have entered an invalid selection...')
-            offer_user_quit()
+            prompt_user_quit()
             if quit_input is True:
                 pass
             else:
@@ -383,7 +371,6 @@ def get_closet_urls():
 
 
 def get_closet_share_icons():
-    def get_closet_share_icons():
     try:
         item_pat = "//div[@class='social-info social-actions d-fl ai-c jc-c']"
         items = driver.find_elements_by_xpath(item_pat)
@@ -416,6 +403,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
     while True:
         try:
             # Start Share Bot Loop
+            global quit_input  # Ensure we use the global quit_input variable
             quit_input = False
             deploy_share_bot(driver, number, order, random_subset)
 
@@ -431,7 +419,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
         except NoSuchElementException as e:
             # Handle NoSuchElementException
             logger.error("Element not found: %s", e)
-            offer_user_quit()
+            prompt_user_quit()
             if quit_input:
                 driver.quit()
                 sys.exit()
@@ -441,7 +429,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
         except Exception as e:
             # Handle other exceptions
             logger.error("ERROR: %s", e)
-            offer_user_quit()
+            prompt_user_quit()
             if quit_input:
                 pass
             else:
@@ -569,7 +557,7 @@ if __name__=="__main__":
     ##################################
    
     try:
-        driver = get_webdriver(args.driver)
+        driver = setup_driver(args.driver)
     except ValueError as e:
         logger.error("ERROR: %s", e)
         sys.exit()
