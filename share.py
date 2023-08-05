@@ -1,20 +1,21 @@
-import time
-import argparse
-import sys
 import os
+import sys
+import time
 import textwrap
+import argparse
 import numpy as np
 import pyautogui
 import logging
+from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.safari.options import Options as SafariOptions
-from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
-from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeDriverManager
 from selenium.common.exceptions import NoSuchElementException
+
 
 # Configure the logger
 logging.basicConfig(
