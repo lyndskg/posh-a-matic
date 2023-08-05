@@ -51,12 +51,7 @@ def setup_driver(driver_name):
     except Exception as e:
         logger.error("Error occurred while initializing the driver: %s", e)
         sys.exit(1)
-
-
-
-def setup_driver(driver_name):
-    return setup_driver(driver_name)
-
+        
 
 # Add the handle_manual_captcha function
 def handle_manual_captcha():
