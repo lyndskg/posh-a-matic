@@ -19,9 +19,11 @@ This script is designed for users with a [seller account on Poshmark marketplace
 > - automated sharing of the listings for every item in your closet with all subscribers, or
 > - automated sharing of all the listings of another Poshmark account. 
 
+&nbsp;
+
 Once the script is executed, it will share the requested listings every 120 minutes. 
 
-*You can edit the timing and other options if you desire.*
+<h4><strong></strong><ins>Note</ins>:</strong> <em>You can edit the timing and other options if you desire.</em></h4>
 
 ------
 
@@ -30,18 +32,21 @@ Once the script is executed, it will share the requested listings every 120 minu
 ## Let the Share War Begin
 
 ### <ins>Prerequisites</ins>
-
-* Python 3.5+
-* Firefox 69.0.1+
-* [Selenium](http://selenium-python.readthedocs.io)==3.141.0+
-* [Numpy](https://numpy.org/)==1.15.2+
+> - `Python`: v.*3.5+*
+> - `Firefox`: v.*69.0.1+*
+> - [`Selenium`](http://selenium-python.readthedocs.io): v.*3.141.0+*
+> - [`Numpy`](https://numpy.org/): v.*1.15.2+*
 
 &nbsp;
 
-To install `Python3` requirements, you may run `pip install -r requirements.txt`. You will also need a recent version of Firefox (or another webdriver of your choice). 
+To install `Python3` requirements, you may run `pip install -r requirements.txt`. 
 
 
-If using Firefox, you will also likely need to install `geckodriver`, which on macOS can be accomplished using [Homebrew](https://brew.sh/) with the command `brew install geckodriver` in terminal.
+
+
+
+You will also need a recent version of `Firefox` (or another webdriver of your choice). 
+> If using `Firefox`, you will also likely need to install `geckodriver`, which on macOS can be accomplished using [Homebrew](https://brew.sh/) with the command `brew install geckodriver` in terminal.
 
 
 <p align="right"><a href="#top">(back to top)</a></p>
@@ -121,15 +126,19 @@ __<ins>Note</ins>:__ *If you have several versions of* `python`, *you will need 
 
 ## <ins>Advanced Options</ins>
 
-There are a variety of optional arguments for the script, including timing, closet scroll size, closet ordering, the account to share, and the webdriver. To display the full range of command line arguments type `python share.py --help`. For convenience, these options are described below.
+There are a variety of optional arguments for the script, including timing, closet scroll size, closet ordering, the account to share, and the webdriver. 
+
+To display the full range of command line arguments type `python share.py --help`. 
+For convenience, these options are described below.
+
 
 ### <ins>Timing</ins>:
 
 You can adjust the timing from the command line. The default is 7200 seconds (*120 minutes* or *2 hours*). 
 
-Using a shorter time period is not recommended as it will be more likely caught by both captcha (`I am not a robot`) detection systems either at login or during the actual sharing. 
+Using a shorter time period is *__not__ recommended* as it will be more likely caught by both captcha (`I am not a robot`) detection systems either at login or during the actual sharing. 
 
-Here are some examples:
+*Here are some examples:*
 > - Every *four* hours: `python share.py -t 14400`
 > - Every *two* hours: `python share.py -t 7200`
 
@@ -140,9 +149,15 @@ Here are some examples:
 
 ### <ins>Closet Size</ins>:
 
-The latest version of this code will automatically scroll to the end of your active listings in your closet. You should no longer need to adjust the number of possible scrolls (default, `n` = 1000). If you desired to share only part of your closet, you could descrease the number of scrolls with the `-n` parameter:
+The latest version of this code will automatically scroll to the end of your active listings in your closet. You should no longer need to adjust the number of possible scrolls (default, `n` = 1000). &nbsp;
 
-* Scroll only 1 times: `python share.py -n 1`
+If you desired to share only part of your closet, you could descrease the number of scrolls with the `-n` parameter: 
+
+
+`python share.py -n 1`
+
+
+__<ins>Note</ins>:__ *The code above scrolls only 1 time.*
 
 
 <p align="right"><a href="#top">(back to top)</a></p>
@@ -153,8 +168,9 @@ The latest version of this code will automatically scroll to the end of your act
 
 To preserve closet order, the closet items must be shared in their reverse order. To this end, the default sorting is `order=True`:
 
-* **Preserve Closet Order, <ins>version 1</ins>:**  `python share.py` 
-* **Preserve Closet Order, <ins>version 2</ins>:**  `python share.py -o True`
+__<ins>*Preserve Closet Order</ins>*:__
+> 1. `python share.py`
+> 2. `python share.py -o True`
 
 To override this option, you can reverse order the items of the closet with the following flag, `-o False`:
 
