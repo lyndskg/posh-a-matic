@@ -53,8 +53,8 @@ def setup_driver(driver_name):
         sys.exit(1)
         
 
-# Add the handle_manual_captcha function
-def handle_manual_captcha():
+# Add the handle_captcha function
+def handle_captcha():
     logger.info("[*] ERROR in Share : Thwarted by Captchas")
     logger.info("[*] Please open the browser to the Poshmark login page.")
     logger.info("[*] Solve the CAPTCHA and log in as a human.")
@@ -70,8 +70,8 @@ def handle_manual_captcha():
         logger.info("[*] Exiting the script.")
         sys.exit()
 
-# Add the prompt_user_quit function
-def prompt_user_quit():
+# Add the check_quit_input function
+def check_quit_input():
     quit_mes = textwrap.dedent('''
         [*] if you would like to quit, enter [q]
             otherwise, enter any other key to continue
@@ -87,7 +87,7 @@ def prompt_user_quit():
         
 # Modify the login function
 def login(debugger=False):
-
+    
     if debugger is True:
         import pdb; pdb.set_trace()
     else:
@@ -121,7 +121,7 @@ def login(debugger=False):
             captcha_fail = driver.find_element_by_xpath(captcha_pat)
             if len(str(captcha_fail)) > 100:
                 logger.info("Captcha detected. Manual intervention required.")
-                handle_manual_captcha()  # Call the handle_manual_captcha function
+                handle_captcha()  # Call the handle_captcha function
                 login(debugger=True)  # Retry login after manual intervention
                 return
         except NoSuchElementException:
@@ -135,7 +135,7 @@ def login(debugger=False):
                 you may now attempt to login with the python debugger
             '''))
         logger.error("Error occurred during login: %s", e)
-        prompt_user_quit()
+        check_quit_input()
         login(debugger=True)
         pass
 
@@ -268,8 +268,8 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
 
 
 
-# Add the simulate_interaction function
-def simulate_interaction():
+# Add the simulate_human_interaction function
+def simulate_human_interaction():
     try:
         # Simulate mouse movement
         x, y = pyautogui.position()
@@ -320,7 +320,7 @@ def confirm_account_sharing(account, username):
             driver.get(seller_page)
         else:
             logger.info('[*] you have entered an invalid selection...')
-            prompt_user_quit()
+            check_quit_input()
             if quit_input is True:
                 pass
             else:
@@ -414,7 +414,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
         except NoSuchElementException as e:
             # Handle NoSuchElementException
             logger.error("Element not found: %s", e)
-            prompt_user_quit()
+            check_quit_input()
             if quit_input:
                 driver.quit()
                 sys.exit()
@@ -424,7 +424,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
         except Exception as e:
             # Handle other exceptions
             logger.error("ERROR: %s", e)
-            prompt_user_quit()
+            check_quit_input()
             if quit_input:
                 pass
             else:
