@@ -76,7 +76,6 @@ def offer_user_quit():
         quit_input = True
     else:
         pass
-        
     
 # Modify the login function
 def login(debugger=False):
@@ -333,20 +332,6 @@ def confirm_account_sharing(account, username):
             else:
                confirm_account_sharing(account, username)
 
-
-def offer_user_quit():
-    ## Provide Option to Quit
-    quit_mes = textwrap.dedent('''
-            [*] if you would like to quit, enter [q]
-                otherwise, enter any other key to continue
-            ''')
-    quit_selection = input(quit_mes)
-    qs = str(quit_selection).lower()
-    if qs == 'q':
-        global quit_input
-        quit_input = True
-    else:
-        pass
 
 
 def get_seller_page_url(poshmark_account):
