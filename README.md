@@ -11,7 +11,6 @@ It is designed to automate sharing the listings for every item in your closet wi
 
 
 Once the script is executed, it will share the requested listings every 120 minutes. You can edit the timing and other options if you desire.
-
 &nbsp;
 
 ## Let the Share War Begin
