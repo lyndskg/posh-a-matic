@@ -5,22 +5,34 @@ import sys
 import os
 import textwrap
 import numpy as np
+import pyautogui
+
 from selenium.webdriver.common.keys import Keys
+
 from seleniumwire import webdriver as wirewebdriver  # Import the specific class
 from webdriver_manager.firefox import GeckoDriverManager
-import pyautogui
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.safari.options import Options as SafariOptions  # Add this line for Safari
+from selenium.webdriver.edge.options import Options as EdgeOptions  # Add this line for Safari
+from selenium import webdriver  # Include this line
 
-# Rest of the code...
 
-# Set up the wirewebdriver instance for Chrome
+# Set up Firefox webdriver instance
+firefox_options = FirefoxOptions()
+firefox_driver = wirewebdriver.Firefox(options=firefox_options)
+
+# Set up Google Chrome webdriver instance
 chrome_options = ChromeOptions()
 chrome_driver = wirewebdriver.Chrome(options=chrome_options)
 
-# Set up the wirewebdriver instance for Firefox
-firefox_options = FirefoxOptions()
-firefox_driver = wirewebdriver.Firefox(options=firefox_options)
+# Set up Safari webdriver instance
+safari_options = SafariOptions()
+safari_driver = wirewebdriver.Safari(options=safari_options)
+
+# Set up Edge webdriver instance
+edge_options = EdgeOptions()
+edge_driver = wirewebdriver.Edge(options=edge_options)
 
 # Add the manual_captcha_handler function
 def manual_captcha_handler():
@@ -148,6 +160,22 @@ def deploy_share_war(n=3, order=True, random_subset=0):
                     print(request.response.status_code)
                     print(request.response.headers)
 
+        # Access the requests captured by seleniumwire for Safari
+            for request in safari_driver.requests:
+                if request.response:
+                    print(request.url)
+                    print(request.method)
+                    print(request.response.status_code)
+                    print(request.response.headers)
+
+        # Access the requests captured by seleniumwire for Edge
+            for request in edge_driver.requests:
+                if request.response:
+                    print(request.url)
+                    print(request.method)
+                    print(request.response.status_code)
+                    print(request.response.headers)
+
         print("[*] closet successfully shared...posh-on...")
         pass
         
@@ -178,12 +206,6 @@ def simulate_human_interaction():
     time.sleep(2)
     pyautogui.scroll(-3)
     
-
-firefox_options = webdriver.FirefoxOptions()
-firefox_options.binary_location = "/Applications/Firefox.app/Contents/MacOS/firefox"
-
-driver = webdriver.Firefox(options=firefox_options)
-
 
 
 
