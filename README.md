@@ -55,9 +55,13 @@ poshmark_password = "poshmarkpassword"
 Edit the text in quotes to your actual username and password. Save the file and rename it `credentials.py`. 
 > Assuming you are in the repo directory, the bash command would be `mv example_credentials.py credentials.py` .
 
-#### Firefox and Other Web Drivers
+&nbsp;
 
-* The default webdriver for this script is Firefox, which was the original web browser used in writing this script and executing the code. From a development perspective Firefox offers a better interface to inspect the HTML code needed in writing the scraper. However, other webdrivers, including Chrome, Safari, or Edge may be used. 
+### <ins>Firefox and Other Web Drivers</ins>
+
+* The default webdriver for this script is Firefox, which was the original web browser used in writing this script and executing the code. From a development perspective Firefox offers a better interface to inspect the HTML code needed in writing the scraper.
+
+However, other webdrivers, including Chrome, Safari, or Edge may be used. 
 
 To learn more about setting up the appropriate web driver, visit the Selenium web driver documentation below:
 [https://selenium-python.readthedocs.io/installation.html#drivers](https://selenium-python.readthedocs.io/installation.html#drivers)
