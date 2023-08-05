@@ -11,6 +11,7 @@ This script is designed for users with a [seller account on Poshmark marketplace
 > - automated sharing of the listings for every item in your closet with all subscribers, or
 > - autmated sharing of all the listings of another Poshmark account. 
 
+&nbsp;
 
 Once the script is executed, it will share the requested listings every 120 minutes. *You can edit the timing and other options if you desire.*
 
