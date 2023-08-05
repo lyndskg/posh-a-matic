@@ -284,16 +284,7 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
         [*] the share war will continue in {} minutes...
             current time: {}
         '''.format(loop_delay, current_time)))
-    
 
-
-        # Access the requests captured by seleniumwire for Edge
-            for request in edge_driver.requests:
-                if request.response:
-                    logging.info(request.url)
-                    logging.info(request.method)
-                    logging.info(request.response.status_code)
-                    logging.info(request.response.headers)
 
 
 
@@ -436,14 +427,25 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
             random_loop_time = random(loop_time)
             time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
 
-        except Exception as e:
-            logger.error("ERROR: %s", e)
+        except NoSuchElementException as e:
+            # Handle NoSuchElementException
+            logger.error("Element not found: %s", e)
             offer_user_quit()
             if quit_input:
                 driver.quit()
                 sys.exit()
             else:
                 pass
+                
+        except Exception as e:
+            # Handle other exceptions
+            logger.error("ERROR: %s", e)
+            offer_user_quit()
+            if quit_input:
+                pass
+            else:
+                # Sleep for some time before retrying
+                time.sleep(30)
 
     
 if __name__=="__main__":
