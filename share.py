@@ -15,8 +15,9 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium import webdriver
 from webdriver_manager.microsoft import EdgeDriverManager
 
+# Configure the logger
 logging.basicConfig(
-    # filename='share_war.log',  ## Specify the log file name
+    filename='share.log',  # Specify the log file name
     level=logging.ERROR, # Set the logging level to ERROR or higher
     format='[%(levelname)s] %(asctime)s - %(message)s') # Specify the log message format
 )
@@ -29,21 +30,26 @@ DRIVER_FIREFOX = 2
 DRIVER_EDGE = 3
 
 def get_webdriver(driver_name):
-    if driver_name == '0' or driver_name.lower() == 'chrome':
-        chrome_options = ChromeOptions()
-        driver = webdriver.Chrome(options=chrome_options)
-    elif driver_name == '1' or driver_name.lower() == 'safari':
-        safari_options = SafariOptions()
-        driver = webdriver.Safari(options=safari_options)
-    elif driver_name == '2' or driver_name.lower() == 'firefox':
-        firefox_options = FirefoxOptions()
-        driver = webdriver.Firefox(options=firefox_options)
-    elif driver_name == '3' or driver_name.lower() == 'edge':
-        edge_options = EdgeOptions()
-        driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=edge_options)
-    else:
-        raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
-    return driver
+    try:
+        if driver_name == '0' or driver_name.lower() == 'chrome':
+            chrome_options = ChromeOptions()
+            driver = webdriver.Chrome(options=chrome_options)
+        elif driver_name == '1' or driver_name.lower() == 'safari':
+            safari_options = SafariOptions()
+            driver = webdriver.Safari(options=safari_options)
+        elif driver_name == '2' or driver_name.lower() == 'firefox':
+            firefox_options = FirefoxOptions()
+            driver = webdriver.Firefox(options=firefox_options)
+        elif driver_name == '3' or driver_name.lower() == 'edge':
+            edge_options = EdgeOptions()
+            driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=edge_options)
+        else:
+            raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
+        return driver
+    except Exception as e:
+        logger.error("Error occurred while initializing the driver: %s", e)
+        sys.exit(1)
+
 
 
 def setup_driver(driver_name):
