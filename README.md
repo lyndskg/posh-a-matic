@@ -31,7 +31,7 @@ To install Python3 requirements, you may run `pip install -r requirements.txt`. 
 
 ## Setup
 
-#### Git Clone
+### <ins>Git Clone</ins>
 
 First clone the repository in terminal:
 * `git clone https://github.com/lyndskg/poshamatic`
