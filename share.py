@@ -19,7 +19,7 @@ from selenium.common.exceptions import NoSuchElementException
 # Configure the logger
 logging.basicConfig(
     filename='share.log',  # Specify the log file name
-    level=logging.ERROR, # Set the logging level to ERROR or higher
+    level=logging.DEBUG, # Set the logging level to DEBUG or higher
     format='[%(levelname)s] %(asctime)s - %(message)s') # Specify the log message format
 )
 logger = logging.getLogger(__name__)
@@ -59,7 +59,7 @@ def setup_driver(driver_name):
 
 # Add the manual_captcha_handler function
 def manual_captcha_handler():
-    logging.info("[*] ERROR in Share War: Thwarted by Captchas")
+    logging.info("[*] ERROR in Share : Thwarted by Captchas")
     logging.info("[*] Please open the browser to the Poshmark login page.")
     logging.info("[*] Solve the CAPTCHA and log in as a human.")
     logging.info("[*] Once you've successfully logged in, come back here.")
@@ -136,7 +136,7 @@ def login(debugger=False):
 
     except Exception as e:
         # Captcha Catch
-        logging.info("[*] ERROR in Share War: Thwarted by Captchas")
+        logging.info("[*] ERROR in Share Bot: Thwarted by Captchas")
         logger.error("Error occurred during login: %s", e)
         offer_user_quit()
         login(debugger=True)
@@ -145,7 +145,7 @@ def login(debugger=False):
 
     except: Exception:
         # Captcha Catch
-        logging.info("[*] ERROR in Share War: Thwarted by Captchas")
+        logging.info("[*] ERROR in Share Bot: Thwarted by Captchas")
         offer_user_quit()
         login(debugger=True)
         pass
@@ -174,7 +174,7 @@ def login(debugger=False):
     except:
         ## Captcha Catch
         logging.info(textwrap.dedent('''
-            [*] ERROR in Share War: Thrwarted by Captchas
+            [*] ERROR in Share Bot: Thrwarted by Captchas
                 you may now attempt to login with the python debugger
             '''))
         offer_user_quit()
@@ -182,8 +182,8 @@ def login(debugger=False):
         pass
 
 
-def deploy_share(driver, n=3, order=True, random_subset=0):
-    logging.info("[*] DEPLOYING SHARE WAR")
+def deploy_share_bot(driver, n=3, order=True, random_subset=0):
+    logging.info("[*] DEPLOYING SHARE BOT")
     
     try:
         if login() is True:
@@ -205,7 +205,7 @@ def deploy_share(driver, n=3, order=True, random_subset=0):
         if random_subset != 0:
             try:
                 random_subset = int(random_subset)
-                logging.info(textwrap.dedent('''
+                print(textwrap.dedent('''
                     [*] you have selected to share a random subset of {} items
                         from all {} PoshMark listings in the closet...
                         please wait...
@@ -213,7 +213,8 @@ def deploy_share(driver, n=3, order=True, random_subset=0):
 
                 share_icons = np.random.choice(share_icons, random_subset, replace=False).tolist()
 
-            except:
+            except Exception as e:
+                logger.warning("Error occurred while selecting random subset: %s", e)
                 pass
         else:
             pass
@@ -223,11 +224,12 @@ def deploy_share(driver, n=3, order=True, random_subset=0):
             [*] sharing PoshMark listings for {} items in closet...
                 please wait...
             '''.format(len(share_icons))))
+    
         
         ## Share Listings using Chrome driver
         for item in share_icons:
             clicks_share_followers(item)
-            # Access the requests captured by seleniumwire for Chrome
+            # Access the requests captured by selenium-wire for Chrome
             for request in chrome_driver.requests:
                 if request.response:
                     logging.info(request.url)
@@ -235,24 +237,55 @@ def deploy_share(driver, n=3, order=True, random_subset=0):
                     logging.info(request.response.status_code)
                     logging.info(request.response.headers)
                     
-        ## Share Listings using Firefox driver
-        for item in share_icons:
-            clicks_share_followers(item)
-            # Access the requests captured by seleniumwire for Firefox
-            for request in firefox_driver.requests:
-                if request.response:
-                    logging.info(request.url)
-                    logging.info(request.method)
-                    logging.info(request.response.status_code)
-                    logging.info(request.response.headers)
 
-        # Access the requests captured by seleniumwire for Safari
+        # Access the requests captured by selenium-wire for Safari
             for request in safari_driver.requests:
                 if request.response:
                     logging.info(request.url)
                     logging.info(request.method)
                     logging.info(request.response.status_code)
                     logging.info(request.response.headers)
+
+        ## Share Listings using Firefox driver
+        for item in share_icons:
+            clicks_share_followers(item)
+            # Access the requests captured by selenium-wire for Firefox
+            for request in firefox_driver.requests:
+                if request.response:
+                    logging.info(request.url)
+                    logging.info(request.method)
+                    logging.info(request.response.status_code)
+                    logging.info(request.response.headers)
+                    
+        # Access the requests captured by selenium-wire for Edge
+            for request in edge_driver.requests:
+                if request.response:
+                    logging.info(request.url)
+                    logging.info(request.method)
+                    logging.info(request.response.status_code)
+                    logging.info(request.response.headers)
+
+            logging.info("[*] closet successfully shared...posh-on...")
+        pass
+        
+    except Exception as e:
+        logging.info("[*] ERROR in Share Bot")
+        logger.error("Error occurred during share war deployment: %s", e)
+        pass
+
+    ## Closing Message
+    loop_delay = int(random_loop_time/60)
+    current_time = time.strftime("%I:%M%p on %b %d, %Y")
+    print(textwrap.dedent('''
+        [*] the share war will continue in {} minutes...
+            current time: {}
+        '''.format(loop_delay, current_time)))
+     logging.info(textwrap.dedent('''
+        [*] the share war will continue in {} minutes...
+            current time: {}
+        '''.format(loop_delay, current_time)))
+    
+
 
         # Access the requests captured by seleniumwire for Edge
             for request in edge_driver.requests:
@@ -262,38 +295,25 @@ def deploy_share(driver, n=3, order=True, random_subset=0):
                     logging.info(request.response.status_code)
                     logging.info(request.response.headers)
 
-        logging.info("[*] closet successfully shared...posh-on...")
-        pass
-        
-    except:
-        logging.info("[*] ERROR in Share War")
-        pass
-    
-    ## Closing Message
-    loop_delay = int(random_loop_time/60)
-    current_time = time.strftime("%I:%M%p on %b %d, %Y")
-    logging.info(textwrap.dedent('''
-        [*] the share war will continue in {} minutes...
-            current time: {}
-        '''.format(loop_delay, current_time)))
-
 
 
 # Add the simulate_human_interaction function
 def simulate_human_interaction():
-    # Simulate mouse movement
-    x, y = pyautogui.position()
-    pyautogui.moveTo(x + 10, y + 10, duration=0.5)
-    pyautogui.moveTo(x - 10, y - 10, duration=0.5)
-    pyautogui.moveTo(x, y, duration=0.5)
+    try:
+        # Simulate mouse movement
+        x, y = pyautogui.position()
+        pyautogui.moveTo(x + 10, y + 10, duration=0.5)
+        pyautogui.moveTo(x - 10, y - 10, duration=0.5)
+        pyautogui.moveTo(x, y, duration=0.5)
 
-    # Scroll up and down
-    pyautogui.scroll(3)
-    time.sleep(2)
-    pyautogui.scroll(-3)
-    
-
-
+        # Scroll up and down
+        pyautogui.scroll(3)
+        time.sleep(2)
+        pyautogui.scroll(-3)
+    except Exception as e:
+        logger.warning("Error occurred during simulating human interaction: %s", e)
+        pass
+   
 def get_random_delay(mean_delay):
     times = np.random.rand(1000) + np.random.rand(1000) + mean_delay
     return np.random.choice(times, 1).tolist()[0]
@@ -341,23 +361,27 @@ def get_seller_page_url(poshmark_account):
 
 
 def scroll_page(n, delay=3):
-    scroll = 0
-    screen_heights = [0]
-
-    logging.info("[*] scrolling through all items in closet...")
-
-    for i in range(1, n+1):
-        scroll +=1
-        scroll_script = "window.scrollTo(0, document.body.scrollHeight);"
-        driver.execute_script(scroll_script)
-        height = driver.execute_script("return document.documentElement.scrollHeight")
-        last_height = screen_heights[-1:][0]
-
-        if height == last_height:
-            return
-        else:
-            screen_heights.append(height)
-            time.sleep(get_random_delay(delay))
+    try:
+        scroll = 0
+        screen_heights = [0]
+    
+        logging.info("[*] scrolling through all items in closet...")
+    
+        for i in range(1, n+1):
+            scroll +=1
+            scroll_script = "window.scrollTo(0, document.body.scrollHeight);"
+            driver.execute_script(scroll_script)
+            height = driver.execute_script("return document.documentElement.scrollHeight")
+            last_height = screen_heights[-1:][0]
+    
+            if height == last_height:
+                return
+            else:
+                screen_heights.append(height)
+                time.sleep(get_random_delay(delay))
+    except Exception as e:
+        logger.warning("Error occurred during page scrolling: %s", e)
+        pass
 
 
 def get_closet_urls():
@@ -367,10 +391,16 @@ def get_closet_urls():
 
 
 def get_closet_share_icons():
-    item_pat = "//div[@class='social-info social-actions d-fl ai-c jc-c']"
-    items = driver.find_elements_by_xpath(item_pat)
-    share_icons = [i.find_element_by_css_selector("a[class='share']") for i in items]
-    return share_icons
+    def get_closet_share_icons():
+    try:
+        item_pat = "//div[@class='social-info social-actions d-fl ai-c jc-c']"
+        items = driver.find_elements_by_xpath(item_pat)
+        share_icons = [i.find_element_by_css_selector("a[class='share']") for i in items]
+        return share_icons
+    except Exception as e:
+        logger.error("Error occurred while getting closet share icons: %s", e)
+        return []
+
 
 
 def clicks_share_followers(share_icon, d=4.5):
@@ -393,9 +423,9 @@ def open_closet_item_url(url):
 def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
     while True:
         try:
-            # Start Share War Loop
+            # Start Share Bot Loop
             quit_input = False
-            deploy_share(driver, number, order, random_subset)
+            deploy_share_bot(driver, number, order, random_subset)
 
             if quit_input:
                 break
