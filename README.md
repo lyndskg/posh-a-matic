@@ -29,8 +29,6 @@ To install `Python3` requirements, you may run `pip install -r requirements.txt`
 
 &nbsp;
 
-------
-
 ## Setup
 
 ### <ins>Git Clone</ins>
