@@ -540,24 +540,25 @@ if __name__=="__main__":
     ## Run Script
     ################################## 
 
+
     ## Start Share War Loop
     starttime = time.time()
 
     while True:
             try:
-                # Start Share War Loop
+                # Start Share  Loop
                 quit_input = False
                 deploy_share_war(args.number, args.order, args.random_subset)
     
                 if quit_input:
                     break
     
-                time.sleep(rt(10))
+                time.sleep(get_random_delay(10))
     
                 driver.quit()
     
                 # Time Delay: While Loop
-                random_loop_time = rt(args.time)
+                random_loop_time = random(args.time)
                 time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
     
             except Exception as e:
@@ -566,7 +567,9 @@ if __name__=="__main__":
                     '''.format(e)))
                 driver.quit()
                 sys.exit()
-    
+
+        main_loop(driver, args.time, args.number, args.order, args.random_subset, args.account, args.bypass)
+
         driver.quit()
         sys.exit()
        
