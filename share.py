@@ -18,7 +18,7 @@ from webdriver_manager.microsoft import EdgeDriverManager
 logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 logger = logging.getLogger(__name__)
 
-# Set up web drivers
+# Constants for web drivers
 DRIVER_CHROME = 0
 DRIVER_SAFARI = 1
 DRIVER_FIREFOX = 2
@@ -27,13 +27,13 @@ DRIVER_EDGE = 3
 def get_webdriver(driver_name):
     if driver_name == '0' or driver_name.lower() == 'chrome':
         chrome_options = ChromeOptions()
-        driver = wirewebdriver.Chrome(options=chrome_options)
+        driver = webdriver.Chrome(options=chrome_options)
     elif driver_name == '1' or driver_name.lower() == 'safari':
         safari_options = SafariOptions()
-        driver = wirewebdriver.Safari(options=safari_options)
+        driver = webdriver.Safari(options=safari_options)
     elif driver_name == '2' or driver_name.lower() == 'firefox':
         firefox_options = FirefoxOptions()
-        driver = wirewebdriver.Firefox(options=firefox_options)
+        driver = webdriver.Firefox(options=firefox_options)
     elif driver_name == '3' or driver_name.lower() == 'edge':
         edge_options = EdgeOptions()
         driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=edge_options)
@@ -43,7 +43,7 @@ def get_webdriver(driver_name):
 
 
 def setup_driver(driver_name):
-    return get_web_driver(driver_name)
+    return get_webdriver(driver_name)
 
 
 # Add the manual_captcha_handler function
@@ -394,21 +394,27 @@ def open_closet_item_url(url):
 def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
     while True:
         try:
-            # Rest of the script...
+            # Start Share War Loop
+            quit_input = False
             deploy_share_war(driver, number, order, random_subset)
 
+            if quit_input:
+                break
+
+            time.sleep(get_random_delay(10))
+
+            # Time Delay: While Loop
+            random_loop_time = random(loop_time)
+            time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
+
         except Exception as e:
-            print("[*] ERROR:", e)
+            logger.error("ERROR: %s", e)
             offer_user_quit()
             if quit_input:
                 driver.quit()
                 sys.exit()
             else:
                 pass
-                
-        # Time Delay: While Loop
-        random_loop_time = get_random_delay(loop_time)
-        time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
 
     
 if __name__=="__main__":
@@ -531,47 +537,12 @@ if __name__=="__main__":
     try:
         driver = get_webdriver(args.driver)
     except ValueError as e:
-        print(textwrap.dedent('''
-            [*] ERROR {}
-            '''.format(e)))
+        logger.error("ERROR: %s", e)
         sys.exit()
-    
-    ##################################
-    ## Run Script
-    ################################## 
 
+    main_loop(driver, args.time, args.number, args.order, args.random_subset, args.account, args.bypass)
 
-    ## Start Share War Loop
-    starttime = time.time()
-
-    
-    while True:
-            try:
-                # Start Share  Loop
-                quit_input = False
-                deploy_share_war(args.number, args.order, args.random_subset)
-    
-                if quit_input:
-                    break
-    
-                time.sleep(get_random_delay(10))
-    
-                driver.quit()
-    
-                # Time Delay: While Loop
-                random_loop_time = random(args.time)
-                time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
-    
-            except Exception as e:
-                print(textwrap.dedent('''
-                    [*] ERROR: {}
-                    '''.format(e)))
-                driver.quit()
-                sys.exit()
-
-        main_loop(driver, args.time, args.number, args.order, args.random_subset, args.account, args.bypass)
-
-        driver.quit()
-        sys.exit()
+    driver.quit()
+    sys.exit()
        
 
