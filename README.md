@@ -204,7 +204,7 @@ If you would prefer to not share your entire closet (or another account's entire
 
 
 To do so, add the parameter `-r` followed by a number to your command in the terminal:
-> <ins>Share 25 randomly selected items from another closet</ins>: `python share.py -a another_poshmark_closet -r 25`
+> **<ins>Share 25 randomly selected items from another closet</ins>:** `python share.py -a another_poshmark_closet -r 25`
 
 This is helpful if you would like to share some of another person's closet but not every item they have.
 
