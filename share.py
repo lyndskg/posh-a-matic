@@ -1,20 +1,22 @@
-import os
-import sys
-import time
-import textwrap
 import argparse
-import numpy as np
-import pyautogui
 import logging
+import numpy as np
+import os
+import pyautogui
+import random
+import sys
+import textwrap
+import time
+
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.safari.options import Options as SafariOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeDriverManager
-from selenium.common.exceptions import NoSuchElementException
+
 
 
 # Configure the logger
@@ -87,6 +89,8 @@ def check_quit_input():
         
 # Modify the login function
 def login(debugger=False):
+    max_retries = 5  # Set the maximum number of retries
+    retries = 0
     
     if debugger is True:
         import pdb; pdb.set_trace()
@@ -98,69 +102,80 @@ def login(debugger=False):
 
     time.sleep(get_random_delay(5))
 
-    try:
-        ## Login
-        logger.info(textwrap.dedent('''
-            [*] logging into Poshmark seller account: {}...
-                the share war will begin momentarily...
-            '''.format(poshmark_username)))
-        username = driver.find_element_by_name("login_form[username_email]")
-        username.send_keys(poshmark_username)
-        time.sleep(get_random_delay(5))
-
-        password = driver.find_element_by_name("login_form[password]")
-        password.send_keys(poshmark_password)
-        time.sleep(get_random_delay(5))
-
-        password.send_keys(Keys.RETURN)
-        time.sleep(get_random_delay(5))
-    
-        ## Check for Captcha
+    while retries < max_retries:
         try:
-            captcha_pat = "//span[@class='base_error_message']"
-            captcha_fail = driver.find_element_by_xpath(captcha_pat)
-            if len(str(captcha_fail)) > 100:
-                logger.info("Captcha detected. Manual intervention required.")
-                handle_captcha()  # Call the handle_captcha function
-                login(debugger=True)  # Retry login after manual intervention
+            ## Login
+            logger.info(textwrap.dedent('''
+                [*] logging into Poshmark seller account: {}...
+                    the share war will begin momentarily...
+                '''.format(poshmark_username)))
+            username = driver.find_element_by_name("login_form[username_email]")
+            username.send_keys(poshmark_username)
+            time.sleep(get_random_delay(5))
+
+            password = driver.find_element_by_name("login_form[password]")
+            password.send_keys(poshmark_password)
+            time.sleep(get_random_delay(5))
+
+            password.send_keys(Keys.RETURN)
+            time.sleep(get_random_delay(5))
+        
+            ## Check for Captcha
+            try:
+                captcha_pat = "//span[@class='base_error_message']"
+                captcha_fail = driver.find_element_by_xpath(captcha_pat)
+                if len(str(captcha_fail)) > 100:
+                    logger.info("Captcha detected. Manual intervention required.")
+                    handle_captcha()  # Call the handle_captcha function
+                    retries += 1  # Increment the retries counter
+
+                    if login(debugger=True)  # Retry login after manual intervention
                 return
-        except NoSuchElementException:
-            pass
+                    continue
+            except NoSuchElementException:
+                pass
 
+            # Login successful, break out of the loop
+            break
 
-    except Exception as e:
-        # Captcha Catch
-        logger.info(textwrap.dedent('''
-            [*] ERROR in Share Bot: Thrwarted by Captchas
-                you may now attempt to login with the python debugger
-            '''))
-        logger.error("Error occurred during login: %s", e)
-        check_quit_input()
-        login(debugger=True)
+        except Exception as e:
+            # Captcha Catch
+            logger.info(textwrap.dedent('''
+                [*] ERROR in Share Bot: Thwarted by Captchas
+                    you may now attempt to login with the python debugger
+                '''))
+            logger.error("Error occurred during login: %s", e)
+            check_quit_input()
+            if quit_input:
+                break
+            retries += 1  # Increment the retries counter
+            time.sleep(get_random_delay(30)) # Wait for a few seconds before retrying
+
+    else:
+        # The loop completed without successful login, handle the situation accordingly
+        logger.info("Login failed after multiple attempts. Exiting the script.")
+        sys.exit()
+    
+    # Continue with the rest of the login process
+    time.sleep(get_random_delay(10))
+    seller_page = get_seller_page_url(args.account)
+    driver.get(seller_page)
+
+    ## Confirm Account to Share If Not Username
+    if args.bypass == True:
         pass
-
-        ## Navigate to Seller Page
-        time.sleep(get_random_delay(10))
-        seller_page = get_seller_page_url(args.account)
-        driver.get(seller_page)
-
-
-        ## Confirm Account to Share If Not Username
-        if args.bypass == True:
-            pass
-        else:
-            if args.account != poshmark_username:
-                confirm_account_sharing(args.account, poshmark_username)
-                if quit_input is True:
-                    return False
-                else:
-                     pass
+    else:
+        if args.account != poshmark_username:
+            confirm_account_sharing(args.account, poshmark_username)
+            if quit_input is True:
+                return False
             else:
                 pass
+        else:
+            pass
                 
-        return True
-
-
+    return True
+    
 
 def deploy_share_bot(driver, n=3, order=True, random_subset=0):
     logger.info("[*] DEPLOYING SHARE BOT")
@@ -291,8 +306,7 @@ def get_random_delay(mean_delay):
     return np.random.choice(times, 1).tolist()[0]
 
 def get_random_delay_for_interaction(mean_delay):
-    times = np.random.rand(1000) + np.random.rand(1000) + mean_delay
-    return np.random.choice(times, 1).tolist()[0]
+    return get_random_delay(mean_delay)
 
 
 def confirm_account_sharing(account, username):
@@ -380,12 +394,14 @@ def get_closet_share_icons():
 def clicks_share_followers(share_icon, d=4.5):
 
     ## First share click
-    driver.execute_script("arguments[0].click();", share_icon); time.sleep(get_random_delay(get_random_delay(d))
+    driver.execute_script("arguments[0].click();", share_icon); 
+    time.sleep(get_random_delay(d)
 
     ## Second share click
     share_pat = "//a[@class='pm-followers-share-link grey']"
     share_followers = driver.find_element_by_xpath(share_pat)
-    driver.execute_script("arguments[0].click();", share_followers); time.sleep(get_random_delay(d))
+    driver.execute_script("arguments[0].click();", share_followers); 
+    time.sleep(get_random_delay(d))
 
 
 def open_closet_item_url(url):
@@ -395,6 +411,7 @@ def open_closet_item_url(url):
 
 
 def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
+    max_retries = 5  # Set the maximum number of retries
     while True:
         try:
             # Start Share Bot Loop
@@ -430,8 +447,26 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
             else:
                 # Sleep for some time before retrying
                 time.sleep(get_random_delay(30))
-                # Restart the loop
-                continue
+                
+            # Retry loop
+            retries = 0
+            while retries < max_retries:
+                try:
+                    # Continue with the next iteration of the main loop
+                    break
+                except Exception as e:
+                    # Retry again
+                    logger.error("ERROR (Retry %d): %s", retries+1, e)
+                    time.sleep(get_random_delay(30))
+                    retries += 1
+            else:
+                # The loop completed without success, handle the situation accordingly
+                logger.error("Exceeded maximum retries. Exiting the script.")
+                sys.exit()
+
+    driver.quit()
+    sys.exit()
+
 
 
 if __name__=="__main__":
