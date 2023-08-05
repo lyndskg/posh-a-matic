@@ -39,7 +39,8 @@ First clone the repository in terminal:
 Change directories to enter the local repository:
 * `cd poshamatic`
 
-#### User Credentials
+
+### <ins>User Credentials</ins>
 
 You will need to create a `credentials.py` file. It is recommended to simply edit the `example_credentials.py` file and rename it.
 
