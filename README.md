@@ -2,8 +2,12 @@
 
 ![](https://d2zlsagv0ouax1.cloudfront.net/assets/home_page/hp-v5-logo@2x-6003c7f00d83f4df697830d18bdcf167.png)
 
-<h1 align = "center">posh-a-matic</h1> 
-<h4 align = "center"><em><strong><ins>Welcome to the Poshmark Sharing App</ins></strong></em></h4>
+<h1 align="center">posh-a-matic</h1> 
+<h4 align = "center"><ins><em><strong>* welcome to the poshmark sharing app * </em></strong></ins></h4>
+
+<p align="center">
+  <a href="https://www.linkedin.com/in/lyndsey791/">LinkedIn</a>  |  <a href="https://www.sorry-this-site-doesnt-exist-yet./">Website</a>  |     <a href="https://github.com/lyndskg/">GitHub</a>  |  <a href="#contact">Contact Info</a>
+</p>
 
 &nbsp;
 
