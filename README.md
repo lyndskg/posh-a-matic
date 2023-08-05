@@ -13,9 +13,8 @@ Once the script is executed, it will share the requested listings every 120 minu
 
 *You can edit the timing and other options if you desire.*
 
-&nbsp;
 
-### Objectives:
+### <ins>Objectives</ins>:
 
 `poshamatic`'s primary functionalities include: 
 > - automated sharing of the listings for every item in your closet with all subscribers, or
