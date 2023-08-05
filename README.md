@@ -58,7 +58,6 @@ Change directories to enter the local repository:
 
 <p align="right"><a href="#top">(back to top)</a></p>
 
-&nbsp;
 
 ### <ins>User Credentials</ins>:
 
