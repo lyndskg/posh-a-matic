@@ -40,10 +40,12 @@ Once the script is executed, it will share the requested listings every 120 minu
 
 To install `Python3` requirements, you may run `pip install -r requirements.txt`. You will also need a recent version of Firefox (or another webdriver of your choice). If using Firefox, you will also likely need to install `geckodriver`, which on macOS can be accomplished using [Homebrew](https://brew.sh/) with the command `brew install geckodriver` in terminal.
 
-&nbsp;
 
 <p align="right"><a href="#top">(back to top)</a></p>
-                     
+
+&nbsp;
+
+               
 ## Setup
 
 ### <ins>Git Clone</ins>:
@@ -54,10 +56,9 @@ First clone the repository in terminal:
 Change directories to enter the local repository:
 * `cd poshamatic`
 
-&nbsp;
-
-
 <p align="right"><a href="#top">(back to top)</a></p>
+
+&nbsp;
 
 ### <ins>User Credentials</ins>:
 
@@ -72,7 +73,7 @@ poshmark_password = "poshmarkpassword"
 ```
 
 Edit the text in quotes to your actual username and password. Save the file and rename it `credentials.py`. 
-> Assuming you are in the repo directory, the bash command would be `mv example_credentials.py credentials.py` .
+> Assuming you are in the repo directory, the `bash` command would be `mv example_credentials.py credentials.py` .
 
 &nbsp;
 
@@ -81,18 +82,20 @@ Edit the text in quotes to your actual username and password. Save the file and 
 
 ### <ins>Firefox and Other Web Drivers</ins>:
 
-The default webdriver for this script is Firefox, which was the original web browser used in writing this script and executing the code. From a development perspective Firefox offers a better interface to inspect the HTML code needed in writing the scraper.
+The default webdriver for this script is `Firefox`, which was the original web browser used in writing this script and executing the code. 
+
+From a development perspective `Firefox` offers a better interface to inspect the HTML code needed in writing the scraper.
 
 
-However, other webdrivers, including Chrome, Safari, or Edge may be used. 
+However, other webdrivers, *e.g.* `Chrome`, `Safari`, and/or `Edge` may be used. 
 
 
 To learn more about setting up the appropriate web driver, visit the Selenium web driver documentation [here](https://selenium-python.readthedocs.io/installation.html#drivers).
 
-&nbsp;
-
 
 <p align="right"><a href="#top">(back to top)</a></p>
+
+&nbsp;
 
 ------
 
@@ -104,10 +107,10 @@ In terminal run the following command: `python share.py`, which will run the scr
 
 __<ins>Note</ins>:__ *If you have several versions of `python`, you will need to amend the above line to run your python 3 alias, *e.g.* `python3 share.py`.*
 
-&nbsp;
-
 
 <p align="right"><a href="#top">(back to top)</a></p>
+
+&nbsp;
 
 
 ## <ins>Advanced Options</ins>
@@ -124,10 +127,10 @@ Here are some examples:
 > - Every *four* hours: `python share.py -t 14400`
 > - Every *two* hours: `python share.py -t 7200`
 
-&nbsp;
-
 
 <p align="right"><a href="#top">(back to top)</a></p>
+
+&nbsp;
 
 ### <ins>Closet Size</ins>:
 
@@ -135,10 +138,10 @@ The latest version of this code will automatically scroll to the end of your act
 
 * Scroll only 1 times: `python share.py -n 1`
 
-&nbsp;
-
 
 <p align="right"><a href="#top">(back to top)</a></p>
+
+&nbsp;
 
 ### <ins>Closet Ordering</ins>:
 
@@ -151,10 +154,10 @@ To override this option, you can reverse order the items of the closet with the 
 
 * **Reverse Original Closet Order:** `python share.py -o False`
 
-&nbsp;
-
 
 <p align="right"><a href="#top">(back to top)</a></p>
+
+&nbsp;
 
 ### <ins>Account</ins>:
 
@@ -187,34 +190,39 @@ __<ins>Note</ins>:__ *This prompt will occur each time the code runs.*
 
 If you are confident you want to repeatedly share another users entire closet every few hours, you can bypass this prompt with the following command line option `b True`. 
 
-&nbsp;
-
-
 <p align="right"><a href="#top">(back to top)</a></p>
+
+&nbsp;
 
 ### <ins>Random Sharing Subset</ins>:
 
-If you would prefer to not share your entire closet (or another account's entire closet), you may select to share a randomly selected subset of items from all possible active items. To do so, add the parameter `-r` followed by a number to your command in the terminal:
+If you would prefer to not share your entire closet (or another account's entire closet), you may select to share a randomly selected subset of items from all possible active items. 
 
-* Share 25 randomly selected items from another closet: `python share.py -a another_poshmark_closet -r 25`
+
+To do so, add the parameter `-r` followed by a number to your command in the terminal:
+> <ins>Share 25 randomly selected items from another closet</ins>: `python share.py -a another_poshmark_closet -r 25`
 
 This is helpful if you would like to share some of another person's closet but not every item they have.
 
-&nbsp;
-
 <p align="right"><a href="#top">(back to top)</a></p>
 
+&nbsp;
 
 ### <ins>Webdriver</ins>:
 
-Alternative `Selenium` web drivers may also be specified. Drivers may be called by entering their name, e.g. `-d Firefox` or `-d Chrome` or alternatively referring to the numerical shortcut for those options, e.g. `-d 0` or `-d 1`. The full list of driver names and options is as follows:
+Alternative `Selenium` web drivers may also be specified. Drivers may be called by entering their name, e.g. `-d Firefox` or `-d Chrome` or alternatively referring to the numerical shortcut for those options, e.g. `-d 0` or `-d 1`. 
 
-* Firefox==0
-* Chrome==1
-* Edge==2
-* Safari==3
 
-These must be properly installed on your system, otherwise you will encounter an error. See [here](https://selenium-python.readthedocs.io/installation.html#drivers) for further details.
+The full list of *driver names and options* is as follows:
+> - `Firefox` == 0
+> - `Chrome` == 1
+> - `Edge` == 2
+> - `Safari` == 3
+
+
+These must be properly installed on your system, otherwise you will encounter an error.
+
+See [here](https://selenium-python.readthedocs.io/installation.html#drivers) for further details.
 
 
 <p align="right"><a href="#top">(back to top)</a></p>
