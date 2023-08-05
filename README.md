@@ -9,7 +9,6 @@
   <a href="https://www.linkedin.com/in/lyndsey791/">LinkedIn</a>  |  <a href="https://www.sorry-this-site-doesnt-exist-yet./">Website</a>  |     <a href="https://github.com/lyndskg/">GitHub</a>  |  <a href="#contact">Contact Info</a>
 </p>
 
-&nbsp;
 
 ## Project Overview
 This script is designed for users with a [seller account on Poshmark marketplace](https://poshmark.com).
