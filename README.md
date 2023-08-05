@@ -87,8 +87,7 @@ The default webdriver for this script is Firefox, which was the original web bro
 However, other webdrivers, including Chrome, Safari, or Edge may be used. 
 
 
-To learn more about setting up the appropriate web driver, visit the Selenium web driver documentation below:
-[https://selenium-python.readthedocs.io/installation.html#drivers](https://selenium-python.readthedocs.io/installation.html#drivers)
+To learn more about setting up the appropriate web driver, visit the Selenium web driver documentation [here](https://selenium-python.readthedocs.io/installation.html#drivers).
 
 &nbsp;
 
