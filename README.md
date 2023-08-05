@@ -4,6 +4,7 @@
 <h4 align = "center"><em><strong><ins>Welcome to the Poshmark Sharing App</ins></strong></em></h4>
 
 &nbsp;
+
 This script is designed for users with a [seller account on Poshmark marketplace](https://poshmark.com).
 
 It is designed to automate sharing the listings for every item in your closet with all subscribers or to share all the listings of another Poshmark account. Once the script is executed, it will share the requested listings every 120 minutes. You can edit the timing and other options if you desire.
