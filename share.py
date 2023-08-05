@@ -27,11 +27,36 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Constants for web drivers
-DRIVER_CHROME = 0
-DRIVER_SAFARI = 1
-DRIVER_FIREFOX = 2
-DRIVER_EDGE = 3
+DRIVER OPTIONS = {
+    'chrome': ChromeOptions,
+    'safari': SafariOptions,
+    'firefox': FirefoxOptions,
+    'edge': EdgeOptions
+}
+
+def setup_driver(driver_name):
+    try:
+        driver_name = driver_name.lower()
+        if driver_name in DRIVER_OPTIONS:
+            options = DRIVER_OPTIONS[driver_name]()
+            if driver_name == 'chrome' or driver_name == '0':
+                driver = webdriver.Chrome(options=options)
+            elif driver_name == 'safari' or driver_name == '1':
+                driver = webdriver.Safari(options=options)
+            elif driver_name == 'firefox' or driver_name == '2':
+                driver = webdriver.Firefox(options=options)
+            elif driver_name == 'edge' or driver_name == '3':
+                driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=options)
+            else:
+                raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
+            return driver
+        else:
+            raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
+    except Exception as e:
+        logger.error("Error occurred while initializing the driver: %s", e)
+        sys.exit(1)
+
+
 
 def setup_driver(driver_name):
     try:
@@ -569,7 +594,7 @@ if __name__=="__main__":
             drivers may be called by either entering the name
             of the driver or entering the numeric code 
             for that driver name as follows:
-            Chrome==0, Safari==1, Firefox==2, Edge==3
+            Chrome == 0, Safari == 1, Firefox == 2, Edge == 3
 
             :: example, use Firefox:
             -d Firefox 
