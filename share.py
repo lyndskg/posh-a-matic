@@ -15,7 +15,11 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium import webdriver
 from webdriver_manager.microsoft import EdgeDriverManager
 
-logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
+logging.basicConfig(
+    # filename='share_war.log',  ## Specify the log file name
+    level=logging.ERROR, # Set the logging level to ERROR or higher
+    format='[%(levelname)s] %(asctime)s - %(message)s') # Specify the log message format
+)
 logger = logging.getLogger(__name__)
 
 # Constants for web drivers
