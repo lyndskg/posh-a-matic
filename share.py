@@ -9,13 +9,15 @@ import pyautogui
 
 from selenium.webdriver.common.keys import Keys
 
-from seleniumwire import webdriver as wirewebdriver  # Import the specific class
-from webdriver_manager.firefox import GeckoDriverManager
+from seleniumwire import webdriver as wirewebdriver # Import the specific class
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.safari.options import Options as SafariOptions
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.safari.options import Options as SafariOptions  # Add this line for Safari
-from selenium.webdriver.edge.options import Options as EdgeOptions  # Add this line for Safari
-from selenium import webdriver  # Include this line
+from webdriver_manager.microsoft import EdgeDriverManager
+from selenium.webdriver.edge.options import Options as EdgeOptions
+
+from selenium import webdriver
 
 # Set up web drivers
 DRIVER_CHROME = 0
