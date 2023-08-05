@@ -1,7 +1,190 @@
-import selenium, time, argparse, sys, os, textwrap
+import selenium
+import time
+import argparse
+import sys
+import os
+import textwrap
 import numpy as np
-from selenium import webdriver
+import pyautogui
 from selenium.webdriver.common.keys import Keys
+from selenium import webdriver
+from seleniumwire import webdriver as wirewebdriver # Import the specific class
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
+# Set up the wirewebdriver instance for Chrome
+chrome_options = ChromeOptions()
+chrome_driver = wirewebdriver.Chrome(options=chrome_options)
+
+# Set up the wirewebdriver instance for Firefox
+firefox_options = FirefoxOptions()
+firefox_driver = wirewebdriver.Firefox(options=firefox_options)
+
+# Add the manual_captcha_handler function
+def manual_captcha_handler():
+    print("[*] ERROR in Share War: Thwarted by Captchas")
+    print("[*] Please open the browser to the Poshmark login page.")
+    print("[*] Solve the CAPTCHA and log in as a human.")
+    print("[*] Once you've successfully logged in, come back here.")
+    print("[*] Press Enter to continue the script after solving the CAPTCHA.")
+    
+    # Wait for the user to press Enter to continue
+    input("[*] If you want to quit, enter 'q' and press Enter.")
+
+    # Check if the user wants to quit the script
+    quit_choice = input().lower().strip()
+    if quit_choice == 'q':
+        print("[*] Exiting the script.")
+        sys.exit()
+
+    
+# Add the offer_user_quit function
+def offer_user_quit():
+    quit_mes = textwrap.dedent('''
+        [*] if you would like to quit, enter [q]
+            otherwise, enter any other key to continue
+    ''')
+    quit_selection = input(quit_mes)
+    qs = str(quit_selection).lower()
+    if qs == 'q':
+        global quit_input
+        quit_input = True
+    else:
+        pass
+        
+    
+# Modify the login function
+def login(debugger=False):
+    # Existing code...
+    try:
+        # Existing code...
+
+        ## Check for Captcha
+        try:
+            captcha_pat = "//span[@class='base_error_message']"
+            captcha_fail = driver.find_element_by_xpath(captcha_pat)
+            if len(str(captcha_fail)) > 100:
+                manual_captcha_handler()  # Call the manual_captcha_handler function
+                login(debugger=True)  # Retry login after manual intervention
+                return
+            else:
+                pass
+        except Exception as e:
+            pass
+
+        # Existing code...
+
+    except:
+        # Captcha Catch
+        print("[*] ERROR in Share War: Thwarted by Captchas")
+        offer_user_quit()
+        login(debugger=True)
+        pass
+
+
+
+def deploy_share_war(n=3, order=True, random_subset=0):
+    print("[*] DEPLOYING SHARE WAR")
+    
+    try:
+        if login() is True:
+            pass
+        else:
+            return
+
+        scroll_page(n)
+
+        ## Share Icons and Order
+        share_icons = get_closet_share_icons()
+
+        if order is True:
+            share_icons.reverse()
+        else:
+            pass
+
+        ## Share Random Subset of Items
+        if random_subset != 0:
+            try:
+                random_subset = int(random_subset)
+                print(textwrap.dedent('''
+                    [*] you have selected to share a random subset of {} items
+                        from all {} PoshMark listings in the closet...
+                        please wait...
+                    '''.format(random_subset, len(share_icons))))
+
+                share_icons = np.random.choice(share_icons, random_subset, replace=False).tolist()
+
+            except:
+                pass
+        else:
+            pass
+
+        ## Share Message
+        print(textwrap.dedent('''
+            [*] sharing PoshMark listings for {} items in closet...
+                please wait...
+            '''.format(len(share_icons))))
+        
+        ## Share Listings using Chrome driver
+        for item in share_icons:
+            clicks_share_followers(item)
+            # Access the requests captured by seleniumwire for Chrome
+            for request in chrome_driver.requests:
+                if request.response:
+                    print(request.url)
+                    print(request.method)
+                    print(request.response.status_code)
+                    print(request.response.headers)
+                    
+        ## Share Listings using Firefox driver
+        for item in share_icons:
+            clicks_share_followers(item)
+            # Access the requests captured by seleniumwire for Firefox
+            for request in firefox_driver.requests:
+                if request.response:
+                    print(request.url)
+                    print(request.method)
+                    print(request.response.status_code)
+                    print(request.response.headers)
+
+        print("[*] closet successfully shared...posh-on...")
+        pass
+        
+    except:
+        print("[*] ERROR in Share War")
+        pass
+    
+    ## Closing Message
+    loop_delay = int(random_loop_time/60)
+    current_time = time.strftime("%I:%M%p on %b %d, %Y")
+    print(textwrap.dedent('''
+        [*] the share war will continue in {} minutes...
+            current time: {}
+        '''.format(loop_delay, current_time)))
+
+
+
+# Add the simulate_human_interaction function
+def simulate_human_interaction():
+    # Simulate mouse movement
+    x, y = pyautogui.position()
+    pyautogui.moveTo(x + 10, y + 10, duration=0.5)
+    pyautogui.moveTo(x - 10, y - 10, duration=0.5)
+    pyautogui.moveTo(x, y, duration=0.5)
+
+    # Scroll up and down
+    pyautogui.scroll(3)
+    time.sleep(2)
+    pyautogui.scroll(-3)
+    
+
+firefox_options = webdriver.FirefoxOptions()
+firefox_options.binary_location = "/Applications/Firefox.app/Contents/MacOS/firefox"
+
+driver = webdriver.Firefox(options=firefox_options)
+
+
 
 
 def rt(d):
@@ -192,67 +375,6 @@ def open_closet_item_url(url):
     time.sleep(rt(5))
 
 
-def deploy_share_war(n=3, order=True, random_subset=0):
-    print("[*] DEPLOYING SHARE WAR")
-    
-    try:
-        if login() is True:
-            pass
-        else:
-            return
-
-        scroll_page(n)
-
-        ## Share Icons and Order
-        share_icons = get_closet_share_icons()
-
-        if order is True:
-            share_icons.reverse()
-        else:
-            pass
-
-        ## Share Random Subset of Items
-        if random_subset != 0:
-            try: 
-                random_subset = int(random_subset)
-                print(textwrap.dedent('''
-                    [*] you have selected to share a random subset of {} items
-                        from all {} PoshMark listings in the closet...
-                        please wait...
-                    '''.format(random_subset, len(share_icons))))
-
-                share_icons = np.random.choice(share_icons, random_subset, replace=False).tolist()
-
-            except:
-                pass
-        else:
-            pass
-
-        ## Share Message
-        print(textwrap.dedent('''
-            [*] sharing PoshMark listings for {} items in closet...
-                please wait...
-            '''.format(len(share_icons))))
-        
-        ## Share Listings
-        [clicks_share_followers(item) for item in share_icons]
-
-        print("[*] closet successfully shared...posh-on...")
-        pass
-        
-    except:
-        print("[*] ERROR in Share War")
-        pass
-    
-    ## Closing Message
-    loop_delay = int(random_loop_time/60)
-    current_time = time.strftime("%I:%M%p on %b %d, %Y")
-    print(textwrap.dedent('''
-        [*] the share war will continue in {} minutes...
-            current time: {}
-        '''.format(loop_delay, current_time)))
-
-
 
 
 if __name__=="__main__":
@@ -317,14 +439,14 @@ if __name__=="__main__":
         '''),
         usage='use "python %(prog)s --help" for more information',
         formatter_class=RawTextArgumentDefaultsHelpFormatter)
-    parser.add_argument("-t", "--time", default=7200, type=float, 
+    parser.add_argument("-t", "--time", default=14400, type=float,
         help=textwrap.dedent('''\
             loop time in seconds to repeat the code
 
             :: example, repeat in two hours:
             -t 7200
             '''))
-    parser.add_argument("-n", "--number", default=1000, type=int, 
+    parser.add_argument("-n", "--number", default=1000, type=int,
         help="number of closet scrolls")
     parser.add_argument("-o", "--order", default=True, type=bool, 
         help="preserve closet order")
@@ -427,11 +549,11 @@ if __name__=="__main__":
 
         if quit_input is False:
             time.sleep(rt(10))
-            driver.close()
+            driver.quit()
 
             ## Time Delay: While Loop
             time.sleep(random_loop_time - ((time.time() - starttime) % 
                 random_loop_time))
         else:
-            driver.close()
+            driver.quit()
             sys.exit()
