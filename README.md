@@ -167,8 +167,9 @@ To override this option, you can reverse order the items of the closet with the 
 By default, the code will share all the listings for Poshmark account provided in `credentials.py`. 
 
 
-While you will still need your account information in `credentials.py` to login, you may request that the code share the listings of another Poshmark user with the account option: `python share.py -a another_poshmark_closet`.\
-This can be a useful feature, for example, in becoming a Poshmark ambassador.
+While you will still need your account information in `credentials.py` to login, you may request that the code share the listings of another Poshmark user with the account option: `python share.py -a another_poshmark_closet`.
+> This can be a useful feature, for example, in becoming a Poshmark ambassador.
+
 
 Since the code is setup to run on a loop (by default every two hours), a safeguard is put in place to confirm that you actually want to share another users account. 
 
