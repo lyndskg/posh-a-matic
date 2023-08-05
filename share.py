@@ -59,11 +59,11 @@ def setup_driver(driver_name):
 
 # Add the manual_captcha_handler function
 def manual_captcha_handler():
-    logging.info("[*] ERROR in Share : Thwarted by Captchas")
-    logging.info("[*] Please open the browser to the Poshmark login page.")
-    logging.info("[*] Solve the CAPTCHA and log in as a human.")
-    logging.info("[*] Once you've successfully logged in, come back here.")
-    logging.info("[*] Press Enter to continue the script after solving the CAPTCHA.")
+    logger.info("[*] ERROR in Share : Thwarted by Captchas")
+    logger.info("[*] Please open the browser to the Poshmark login page.")
+    logger.info("[*] Solve the CAPTCHA and log in as a human.")
+    logger.info("[*] Once you've successfully logged in, come back here.")
+    logger.info("[*] Press Enter to continue the script after solving the CAPTCHA.")
     
     # Wait for the user to press Enter to continue
     input("[*] If you want to quit, enter 'q' and press Enter.")
@@ -71,7 +71,7 @@ def manual_captcha_handler():
     # Check if the user wants to quit the script
     quit_choice = input().lower().strip()
     if quit_choice == 'q':
-        logging.info("[*] Exiting the script.")
+        logger.info("[*] Exiting the script.")
         sys.exit()
 
 # Add the offer_user_quit function
@@ -104,7 +104,7 @@ def login(debugger=False):
 
     try:
         ## Login
-        logging.info(textwrap.dedent('''
+        logger.info(textwrap.dedent('''
             [*] logging into Poshmark seller account: {}...
                 the share war will begin momentarily...
             '''.format(poshmark_username)))
@@ -124,7 +124,7 @@ def login(debugger=False):
             captcha_pat = "//span[@class='base_error_message']"
             captcha_fail = driver.find_element_by_xpath(captcha_pat)
             if len(str(captcha_fail)) > 100:
-                logging.info("Captcha detected. Manual intervention required.")
+                logger.info("Captcha detected. Manual intervention required.")
                 manual_captcha_handler()  # Call the manual_captcha_handler function
                 login(debugger=True)  # Retry login after manual intervention
                 return
@@ -136,7 +136,7 @@ def login(debugger=False):
 
     except Exception as e:
         # Captcha Catch
-        logging.info("[*] ERROR in Share Bot: Thwarted by Captchas")
+        logger.info("[*] ERROR in Share Bot: Thwarted by Captchas")
         logger.error("Error occurred during login: %s", e)
         offer_user_quit()
         login(debugger=True)
@@ -145,7 +145,7 @@ def login(debugger=False):
 
     except: Exception:
         # Captcha Catch
-        logging.info("[*] ERROR in Share Bot: Thwarted by Captchas")
+        logger.info("[*] ERROR in Share Bot: Thwarted by Captchas")
         offer_user_quit()
         login(debugger=True)
         pass
@@ -173,7 +173,7 @@ def login(debugger=False):
 
     except:
         ## Captcha Catch
-        logging.info(textwrap.dedent('''
+        logger.info(textwrap.dedent('''
             [*] ERROR in Share Bot: Thrwarted by Captchas
                 you may now attempt to login with the python debugger
             '''))
@@ -183,7 +183,7 @@ def login(debugger=False):
 
 
 def deploy_share_bot(driver, n=3, order=True, random_subset=0):
-    logging.info("[*] DEPLOYING SHARE BOT")
+    logger.info("[*] DEPLOYING SHARE BOT")
     
     try:
         if login() is True:
@@ -220,7 +220,7 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
             pass
 
         ## Share Message
-        logging.info(textwrap.dedent('''
+        logger.info(textwrap.dedent('''
             [*] sharing PoshMark listings for {} items in closet...
                 please wait...
             '''.format(len(share_icons))))
@@ -232,19 +232,19 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
             # Access the requests captured by selenium-wire for Chrome
             for request in chrome_driver.requests:
                 if request.response:
-                    logging.info(request.url)
-                    logging.info(request.method)
-                    logging.info(request.response.status_code)
-                    logging.info(request.response.headers)
+                    logger.info(request.url)
+                    logger.info(request.method)
+                    logger.info(request.response.status_code)
+                    logger.info(request.response.headers)
                     
 
         # Access the requests captured by selenium-wire for Safari
             for request in safari_driver.requests:
                 if request.response:
-                    logging.info(request.url)
-                    logging.info(request.method)
-                    logging.info(request.response.status_code)
-                    logging.info(request.response.headers)
+                    logger.info(request.url)
+                    logger.info(request.method)
+                    logger.info(request.response.status_code)
+                    logger.info(request.response.headers)
 
         ## Share Listings using Firefox driver
         for item in share_icons:
@@ -252,24 +252,24 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
             # Access the requests captured by selenium-wire for Firefox
             for request in firefox_driver.requests:
                 if request.response:
-                    logging.info(request.url)
-                    logging.info(request.method)
-                    logging.info(request.response.status_code)
-                    logging.info(request.response.headers)
+                    logger.info(request.url)
+                    logger.info(request.method)
+                    logger.info(request.response.status_code)
+                    logger.info(request.response.headers)
                     
         # Access the requests captured by selenium-wire for Edge
             for request in edge_driver.requests:
                 if request.response:
-                    logging.info(request.url)
-                    logging.info(request.method)
-                    logging.info(request.response.status_code)
-                    logging.info(request.response.headers)
+                    logger.info(request.url)
+                    logger.info(request.method)
+                    logger.info(request.response.status_code)
+                    logger.info(request.response.headers)
 
-            logging.info("[*] closet successfully shared...posh-on...")
+            logger.info("[*] closet successfully shared...posh-on...")
         pass
         
     except Exception as e:
-        logging.info("[*] ERROR in Share Bot")
+        logger.info("[*] ERROR in Share Bot")
         logger.error("Error occurred during share war deployment: %s", e)
         pass
 
@@ -280,7 +280,7 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
         [*] the share war will continue in {} minutes...
             current time: {}
         '''.format(loop_delay, current_time)))
-     logging.info(textwrap.dedent('''
+     logger.info(textwrap.dedent('''
         [*] the share war will continue in {} minutes...
             current time: {}
         '''.format(loop_delay, current_time)))
@@ -314,7 +314,7 @@ def get_random_delay(mean_delay):
 def confirm_account_sharing(account, username):
 
         ## Get User Input
-        logging.info(textwrap.dedent('''
+        logger.info(textwrap.dedent('''
             [*] you have requested to share
                 the items in another poshmark closet:
                 ------------------------------------
@@ -335,7 +335,7 @@ def confirm_account_sharing(account, username):
             seller_page = get_seller_page_url(username)
             driver.get(seller_page)
         else:
-            logging.info('[*] you have entered an invalid selection...')
+            logger.info('[*] you have entered an invalid selection...')
             offer_user_quit()
             if quit_input is True:
                 pass
@@ -356,7 +356,7 @@ def scroll_page(n, delay=3):
         scroll = 0
         screen_heights = [0]
     
-        logging.info("[*] scrolling through all items in closet...")
+        logger.info("[*] scrolling through all items in closet...")
     
         for i in range(1, n+1):
             scroll +=1
@@ -406,7 +406,7 @@ def clicks_share_followers(share_icon, d=4.5):
 
 
 def open_closet_item_url(url):
-    logging.info(url)
+    logger.info(url)
     driver.get(url)
     time.sleep(get_random_delay(5))
 
@@ -446,8 +446,10 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
             else:
                 # Sleep for some time before retrying
                 time.sleep(30)
+                # Restart the loop
+                continue
 
-    
+
 if __name__=="__main__":
 
     
@@ -465,7 +467,7 @@ if __name__=="__main__":
     ## Check to ensure user has created the credentials.py file
     exists = os.path.isfile('./credentials.py')
     if not exists:
-        logging.info(textwrap.dedent('''
+        logger.info(textwrap.dedent('''
             [*] ERROR: `credentials.py` file does not exist.
                 You may need to create the file, for example, 
                 by copying `example_credentials.py`...
@@ -486,7 +488,7 @@ if __name__=="__main__":
         poshmark_username = credentials.poshmark_username
         poshmark_password = credentials.poshmark_password
     except AttributeError:
-        logging.info(textwrap.dedent('''
+        logger.info(textwrap.dedent('''
             [*] ERROR: Username and/or password not specified...
             [*] You may need to uncomment poshmark_username and 
                 poshmark_password in credentials.py
@@ -496,7 +498,7 @@ if __name__=="__main__":
     ## Poshmark closet URL only works with username, so verify
     ## that the user is not using their email address to log in.
     if '@' in poshmark_username:
-        logging.info(textwrap.dedent('''
+        logger.info(textwrap.dedent('''
                     [*] Do not your user email address to log in...
                         use your Poshmark username (closet) instead...
                     '''))
