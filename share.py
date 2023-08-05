@@ -218,9 +218,8 @@ def simulate_human_interaction():
     
 
 
-
-def rt(d):
-    times = np.random.rand(1000)+np.random.rand(1000)+d
+def get_random_delay(mean_delay):
+    times = np.random.rand(1000) + np.random.rand(1000) + mean_delay
     return np.random.choice(times, 1).tolist()[0]
 
 
@@ -426,6 +425,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
         random_loop_time = rt(loop_time)
         time.sleep(random_loop_time - ((time.time() - starttime) % random_loop_time))
 
+    
 if __name__=="__main__":
 
     
