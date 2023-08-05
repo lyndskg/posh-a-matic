@@ -16,7 +16,7 @@ Once the script is executed, it will share the requested listings every 120 minu
 
 ## Let the Share War Begin
 
-### Prerequisites
+### <ins>Prerequisites</ins>
 
 * Python 3.5+
 * Firefox 69.0.1+
