@@ -90,7 +90,7 @@ To learn more about setting up the appropriate web driver, visit the Selenium we
 
 ## Quick Start
 
-### Run in Terminal (Recommended)
+### Run in Terminal (*Recommended*)
 
 In terminal run the following command: `python share.py`, which will run the script with the default options (see below).
 
@@ -104,10 +104,13 @@ There are a variety of optional arguments for the script, including timing, clos
 
 ### Timing
 
-You can adjust the timing from the command line. The default is 7200 seconds (*120 minutes* or *2 hours*). Using a shorter time period is not recommended as it will be more likely caught by both captcha (`I am not a robot`) detection systems either at login or during the actual sharing. Here are some examples:
+You can adjust the timing from the command line. The default is 7200 seconds (*120 minutes* or *2 hours*). 
 
-* Every four hours: `python share.py -t 14400`
-* Every two hours: `python share.py -t 7200`
+Using a shorter time period is not recommended as it will be more likely caught by both captcha (`I am not a robot`) detection systems either at login or during the actual sharing. 
+
+Here are some examples:
+> - Every *four* hours: `python share.py -t 14400`
+> - Every *two* hours: `python share.py -t 7200`
 
 ### Closet Size
 
