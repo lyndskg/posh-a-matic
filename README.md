@@ -83,7 +83,7 @@ To learn more about setting up the appropriate web driver, visit the Selenium we
 
 ## Quick Start
 
-### Run in Terminal (*Recommended*)
+### <ins>Run in Terminal</ins> (*Recommended*):
 
 In terminal run the following command: `python share.py`, which will run the script with the default options (see below).
 
@@ -91,11 +91,11 @@ __*<ins>Note</ins>:*__ If you have several versions of `python`, you will need t
 
 &nbsp;
 
-## Advanced Options
+## <ins>Advanced Options</ins>:
 
 There are a variety of optional arguments for the script, including timing, closet scroll size, closet ordering, the account to share, and the webdriver. To display the full range of command line arguments type `python share.py --help`. For convenience, these options are described below.
 
-### Timing
+### <ins>Timing</ins>:
 
 You can adjust the timing from the command line. The default is 7200 seconds (*120 minutes* or *2 hours*). 
 
@@ -105,14 +105,14 @@ Here are some examples:
 > - Every *four* hours: `python share.py -t 14400`
 > - Every *two* hours: `python share.py -t 7200`
 
-### Closet Size
+### <ins>Closet Size</ins>:
 
 The latest version of this code will automatically scroll to the end of your active listings in your closet. You should no longer need to adjust the number of possible scrolls (default, `n` = 1000). If you desired to share only part of your closet, you could descrease the number of scrolls with the `-n` parameter:
 
 * Scroll only 1 times: `python share.py -n 1`
 
 
-### Closet Ordering
+### <ins>Closet Ordering</ins>:
 
 To preserve closet order, the closet items must be shared in their reverse order. To this end, the default sorting is `order=True`:
 
@@ -124,7 +124,7 @@ To override this option, you can reverse order the items of the closet with the 
 * **Reverse Original Closet Order:** `python share.py -o False`
 
 
-### Account
+### <ins>Account</ins>:
 
 By default, the code will share all the listings for Poshmark account provided in `credentials.py`. 
 
@@ -132,8 +132,10 @@ By default, the code will share all the listings for Poshmark account provided i
 While you will still need your account information in `credentials.py` to login, you may request that the code share the listings of another Poshmark user with the account option: `python share.py -a another_poshmark_closet`.\
 This can be a useful feature, for example, in becoming a Poshmark ambassador.
 
-Since the code is setup to run on a loop (by default every two hours), a safeguard is put in place to confirm that you actually want to share another users account. This will appear in the terminal:
+Since the code is setup to run on a loop (by default every two hours), a safeguard is put in place to confirm that you actually want to share another users account. 
 
+
+This will appear in the terminal:
 ```
 [*] you have requested to share
     the items in another poshmark closet:
@@ -146,10 +148,15 @@ Since the code is setup to run on a loop (by default every two hours), a safegua
     to cancel and share your closet items instead enter [n] :
 y
 ```
-This prompt will occur each time the code runs. If you are confident you want to repeatedly share another users entire closet every few hours, you can bypass this prompt with the following command line option `b True`. 
 
 
-### Random Sharing Subset
+This prompt will occur each time the code runs. 
+
+
+If you are confident you want to repeatedly share another users entire closet every few hours, you can bypass this prompt with the following command line option `b True`. 
+
+
+### <ins>Random Sharing Subset</ins>:
 
 If you would prefer to not share your entire closet (or another account's entire closet), you may select to share a randomly selected subset of items from all possible active items. To do so, add the parameter `-r` followed by a number to your command in the terminal:
 
@@ -158,7 +165,7 @@ If you would prefer to not share your entire closet (or another account's entire
 This is helpful if you would like to share some of another person's closet but not every item they have.
 
 
-### Webdriver
+### <ins>Webdriver</ins>:
 
 Alternative `Selenium` web drivers may also be specified. Drivers may be called by entering their name, e.g. `-d Firefox` or `-d Chrome` or alternatively referring to the numerical shortcut for those options, e.g. `-d 0` or `-d 1`. The full list of driver names and options is as follows:
 
