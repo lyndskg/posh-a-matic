@@ -26,7 +26,7 @@ First clone the repository in terminal:
 * `git clone https://github.com/lyndskg/poshamatic`
 
 Change directories to enter the local repository:
-* `cd poshmark_sharing`
+* `cd poshamatic`
 
 #### User Credentials
 
@@ -60,37 +60,37 @@ This program can also be run in Jupyter with a Python 3 kernel. Simply launch `j
 
 # Advanced Options
 
-There are a variety of optional arguments for the script, including timing, closet scroll size, closet ordering, the account to share, and the webdriver. To display the full range of command line arguments type `python share_war.py --help`. For convenience, these options are displayed in the Jupyter notebook and described below.
+There are a variety of optional arguments for the script, including timing, closet scroll size, closet ordering, the account to share, and the webdriver. To display the full range of command line arguments type `python share.py --help`. For convenience, these options are displayed in the Jupyter notebook and described below.
 
 ### Timing
 
 You can adjust the timing from the command line. The default is 7200 seconds (120 minutes or 2 hours). Using a shorter time period is not recommended as it will be more likely caught by both captcha (`I am not a robot`) detection systems either at login or during the actual sharing. Here are some examples:
 
-* Every four hours: `python share_war.py -t 14400`
-* Every two hours: `python share_war.py -t 7200`
+* Every four hours: `python share.py -t 14400`
+* Every two hours: `python share.py -t 7200`
 
 ### Closet Size
 
 The latest version of this code will automatically scroll to the end of your active listings in your closet. You should no longer need to adjust the number of possible scrolls (default, n=1000). If you desired to share only part of your closet, you could descrease the number of scrolls with the `-n` parameter:
 
-* Scroll only 1 times: `python share_war.py -n 1`
+* Scroll only 1 times: `python share.py -n 1`
 
 
 ### Closet Ordering
 
 To preserve closet order, the closet items must be shared in their reverse order. To this end, the default sorting is `order=True`:
 
-* Preserve Closet Order, version 1:  `python share_war.py` 
-* Preserve Closet Order, version 2:  `python share_war.py -o True`
+* Preserve Closet Order, version 1:  `python share.py` 
+* Preserve Closet Order, version 2:  `python share.py -o True`
 
 To override this option, you can reverse order the items of the closet with the following flag, `-o False`:
 
-* Reverse Original Closet Order: `python share_war.py -o False`
+* Reverse Original Closet Order: `python share.py -o False`
 
 
 ### Account
 
-By default, the code will share all the listings for Poshmark account provided in credentials.py. While you will still need your account information in credentials.py to login, you may request that the code share the listings of another Poshmark user with the account option: `python share_war.py -a another_poshmark_closet`. This can be a useful feature, for example, in becoming a Poshmark ambassador.
+By default, the code will share all the listings for Poshmark account provided in credentials.py. While you will still need your account information in credentials.py to login, you may request that the code share the listings of another Poshmark user with the account option: `python share.py -a another_poshmark_closet`. This can be a useful feature, for example, in becoming a Poshmark ambassador.
 
 Since the code is setup to run on a loop (by default every two hours), a safeguard is put in place to confirm that you actually want to share another users account. This will appear in the terminal:
 
@@ -113,7 +113,7 @@ This prompt will occur each time the code runs. If you are confident you want to
 
 If you would prefer to not share your entire closet (or another account's entire closet), you may select to share a randomly selected subset of items from all possible active items. To do so, add the parameter `-r` followed by a number to your command in the terminal:
 
-* Share 25 randomly selected items from another closet: `python share_war.py -a another_poshmark_closet -r 25`
+* Share 25 randomly selected items from another closet: `python share.py -a another_poshmark_closet -r 25`
 
 This is helpful if you would like to share some of another person's closet but not every item they have.
 
