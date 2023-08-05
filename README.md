@@ -43,7 +43,7 @@ To install `Python3` requirements, you may run `pip install -r requirements.txt`
 
 &nbsp;
 
-<p align="right"><a href="#top">Back to top</a></p>
+<p align="right"><a href="#top">(back to top)</a></p>
                      
 ## Setup
 
@@ -56,6 +56,9 @@ Change directories to enter the local repository:
 * `cd poshamatic`
 
 &nbsp;
+
+
+<p align="right"><a href="#top">(back to top)</a></p>
 
 ### <ins>User Credentials</ins>:
 
@@ -74,6 +77,9 @@ Edit the text in quotes to your actual username and password. Save the file and 
 
 &nbsp;
 
+
+<p align="right"><a href="#top">(back to top)</a></p>
+
 ### <ins>Firefox and Other Web Drivers</ins>:
 
 The default webdriver for this script is Firefox, which was the original web browser used in writing this script and executing the code. From a development perspective Firefox offers a better interface to inspect the HTML code needed in writing the scraper.
@@ -87,6 +93,9 @@ To learn more about setting up the appropriate web driver, visit the Selenium we
 
 &nbsp;
 
+
+<p align="right"><a href="#top">(back to top)</a></p>
+
 ------
 
 ## Quick Start
@@ -98,6 +107,10 @@ In terminal run the following command: `python share.py`, which will run the scr
 __*<ins>Note</ins>:*__ If you have several versions of `python`, you will need to amend the above line to run your python 3 alias, *e.g.* `python3 share.py`.
 
 &nbsp;
+
+
+<p align="right"><a href="#top">(back to top)</a></p>
+
 
 ## <ins>Advanced Options</ins>
 
@@ -115,6 +128,9 @@ Here are some examples:
 
 &nbsp;
 
+
+<p align="right"><a href="#top">(back to top)</a></p>
+
 ### <ins>Closet Size</ins>:
 
 The latest version of this code will automatically scroll to the end of your active listings in your closet. You should no longer need to adjust the number of possible scrolls (default, `n` = 1000). If you desired to share only part of your closet, you could descrease the number of scrolls with the `-n` parameter:
@@ -122,6 +138,9 @@ The latest version of this code will automatically scroll to the end of your act
 * Scroll only 1 times: `python share.py -n 1`
 
 &nbsp;
+
+
+<p align="right"><a href="#top">(back to top)</a></p>
 
 ### <ins>Closet Ordering</ins>:
 
@@ -135,6 +154,9 @@ To override this option, you can reverse order the items of the closet with the 
 * **Reverse Original Closet Order:** `python share.py -o False`
 
 &nbsp;
+
+
+<p align="right"><a href="#top">(back to top)</a></p>
 
 ### <ins>Account</ins>:
 
@@ -169,6 +191,9 @@ If you are confident you want to repeatedly share another users entire closet ev
 
 &nbsp;
 
+
+<p align="right"><a href="#top">(back to top)</a></p>
+
 ### <ins>Random Sharing Subset</ins>:
 
 If you would prefer to not share your entire closet (or another account's entire closet), you may select to share a randomly selected subset of items from all possible active items. To do so, add the parameter `-r` followed by a number to your command in the terminal:
@@ -178,6 +203,9 @@ If you would prefer to not share your entire closet (or another account's entire
 This is helpful if you would like to share some of another person's closet but not every item they have.
 
 &nbsp;
+
+<p align="right"><a href="#top">(back to top)</a></p>
+
 
 ### <ins>Webdriver</ins>:
 
@@ -189,3 +217,6 @@ Alternative `Selenium` web drivers may also be specified. Drivers may be called 
 * Safari==3
 
 These must be properly installed on your system, otherwise you will encounter an error. See [here](https://selenium-python.readthedocs.io/installation.html#drivers) for further details.
+
+
+<p align="right"><a href="#top">(back to top)</a></p>
