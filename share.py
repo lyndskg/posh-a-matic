@@ -14,6 +14,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium import webdriver
 from webdriver_manager.microsoft import EdgeDriverManager
+from selenium.common.exceptions import NoSuchElementException
 
 # Configure the logger
 logging.basicConfig(
@@ -86,24 +87,60 @@ def offer_user_quit():
         quit_input = True
     else:
         pass
-    
+
+        
 # Modify the login function
 def login(debugger=False):
-    # Existing code...
-    try:
-        # Existing code...
 
+    if debugger is True:
+        import pdb; pdb.set_trace()
+    else:
+        pass
+
+    url = "https://poshmark.com/login"
+    driver.get(url)
+
+    time.sleep(get_random_delay(5))
+
+    try:
+        ## Login
+        logging.info(textwrap.dedent('''
+            [*] logging into Poshmark seller account: {}...
+                the share war will begin momentarily...
+            '''.format(poshmark_username)))
+        username = driver.find_element_by_name("login_form[username_email]")
+        username.send_keys(poshmark_username)
+        time.sleep(get_random_delay(5))
+
+        password = driver.find_element_by_name("login_form[password]")
+        password.send_keys(poshmark_password)
+        time.sleep(get_random_delay(5))
+
+        password.send_keys(Keys.RETURN)
+        time.sleep(get_random_delay(5))
+    
         ## Check for Captcha
         try:
             captcha_pat = "//span[@class='base_error_message']"
             captcha_fail = driver.find_element_by_xpath(captcha_pat)
             if len(str(captcha_fail)) > 100:
+                logging.info("Captcha detected. Manual intervention required.")
                 manual_captcha_handler()  # Call the manual_captcha_handler function
                 login(debugger=True)  # Retry login after manual intervention
                 return
-        except selenium.common.exceptions.NoSuchElementException:
+        except NoSuchElementException:
             pass
 
+
+        # Existing code...
+
+    except Exception as e:
+        # Captcha Catch
+        logging.info("[*] ERROR in Share War: Thwarted by Captchas")
+        logger.error("Error occurred during login: %s", e)
+        offer_user_quit()
+        login(debugger=True)
+        pass
         # Existing code...
 
     except: Exception:
@@ -113,6 +150,36 @@ def login(debugger=False):
         login(debugger=True)
         pass
 
+        ## Navigate to Seller Page
+        time.sleep(get_random_delay(10))
+        seller_page = get_seller_page_url(args.account)
+        driver.get(seller_page)
+
+
+        ## Confirm Account to Share If Not Username
+        if args.bypass == True:
+            pass
+        else:
+            if args.account != poshmark_username:
+                confirm_account_sharing(args.account, poshmark_username)
+                if quit_input is True:
+                    return False
+                else:
+                     pass
+            else:
+                pass
+
+        return True
+
+    except:
+        ## Captcha Catch
+        logging.info(textwrap.dedent('''
+            [*] ERROR in Share War: Thrwarted by Captchas
+                you may now attempt to login with the python debugger
+            '''))
+        offer_user_quit()
+        login(debugger=True)
+        pass
 
 
 def deploy_share_war(driver, n=3, order=True, random_subset=0):
@@ -231,84 +298,6 @@ def get_random_delay(mean_delay):
     times = np.random.rand(1000) + np.random.rand(1000) + mean_delay
     return np.random.choice(times, 1).tolist()[0]
 
-
-def login(debugger=False):
-
-    if debugger is True:
-        import pdb; pdb.set_trace()
-    else:
-        pass
-
-    url = "https://poshmark.com/login"
-    driver.get(url)
-
-    time.sleep(get_random_delay(5))
-
-    try:
-        ## Login
-        logging.info(textwrap.dedent('''
-            [*] logging into Poshmark seller account: {}...
-                the share war will begin momentarily...
-            '''.format(poshmark_username)))
-        username = driver.find_element_by_name("login_form[username_email]")
-        username.send_keys(poshmark_username)
-        time.sleep(get_random_delay(5))
-
-        password = driver.find_element_by_name("login_form[password]")
-        password.send_keys(poshmark_password)
-        time.sleep(get_random_delay(5))
-
-        password.send_keys(Keys.RETURN)
-        time.sleep(get_random_delay(5))
-
-        ## Check for Captcha
-        try:
-            captcha_pat = "//span[@class='base_error_message']"
-            captcha_fail = driver.find_element_by_xpath(captcha_pat)
-            if len(str(captcha_fail)) > 100:
-                logging.info(textwrap.dedent('''
-                    [*] caught by captchas...
-                    [*] please complete captchas
-                        robots game before proceeding...
-                    [*] please proceed to terminal debugger
-                    '''))
-                login(debugger=True)
-                return
-            else:
-                pass
-        except Exception as e:
-            pass
- 
-        ## Navigate to Seller Page
-        time.sleep(get_random_delay(10))
-        seller_page = get_seller_page_url(args.account)
-        driver.get(seller_page)
-
-
-        ## Confirm Account to Share If Not Username
-        if args.bypass == True:
-            pass
-        else:
-            if args.account != poshmark_username:
-                confirm_account_sharing(args.account, poshmark_username)
-                if quit_input is True:
-                    return False
-                else:
-                     pass
-            else:
-                pass
-
-        return True
-
-    except:
-        ## Captcha Catch
-        logging.info(textwrap.dedent('''
-            [*] ERROR in Share War: Thrwarted by Captchas
-                you may now attempt to login with the python debugger
-            '''))
-        offer_user_quit()
-        login(debugger=True)
-        pass
 
 
 def confirm_account_sharing(account, username):
