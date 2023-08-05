@@ -52,7 +52,8 @@ poshmark_username = "poshmarkusername"
 poshmark_password = "poshmarkpassword"
 ```
 
-Edit the text in quotes to your actual username and password. Save the file and rename it `credentials.py`. Assuming you are in the repo directory, the bash command would be `mv example_credentials.py credentials.py` .
+Edit the text in quotes to your actual username and password. Save the file and rename it `credentials.py`. 
+> Assuming you are in the repo directory, the bash command would be `mv example_credentials.py credentials.py` .
 
 #### Firefox and Other Web Drivers
 
