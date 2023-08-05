@@ -203,12 +203,12 @@ If you are confident you want to repeatedly share another users entire closet ev
 If you would prefer to not share your entire closet (or another account's entire closet), you may select to share a randomly selected subset of items from all possible active items. 
 
 
-To do so, add the parameter `-r` followed by a number to your command in the terminal:
+To do so, add the parameter `-r` followed by a number to your command in the terminal:\
 `python share.py -a another_poshmark_closet -r 25`
 
-**<ins>Share 25 randomly selected items from another closet</ins>:**
+This shares 25 randomly selected items from another closet.
 
-This is helpful if you would like to share some of another person's closet but not every item they have.
+This functionality is helpful if you would like to share some of another person's closet, but not every item they have.
 
 <p align="right"><a href="#top">(back to top)</a></p>
 
