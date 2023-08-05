@@ -13,6 +13,7 @@ This script is designed for users with a [seller account on Poshmark marketplace
 
 
 Once the script is executed, it will share the requested listings every 120 minutes. *You can edit the timing and other options if you desire.*
+
 &nbsp;
 
 
