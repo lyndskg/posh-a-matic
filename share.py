@@ -92,14 +92,12 @@ def login(debugger=False):
                 manual_captcha_handler()  # Call the manual_captcha_handler function
                 login(debugger=True)  # Retry login after manual intervention
                 return
-            else:
-                pass
-        except Exception as e:
+        except selenium.common.exceptions.NoSuchElementException:
             pass
 
         # Existing code...
 
-    except:
+    except: Exception:
         # Captcha Catch
         print("[*] ERROR in Share War: Thwarted by Captchas")
         offer_user_quit()
