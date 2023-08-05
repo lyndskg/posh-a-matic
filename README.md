@@ -82,10 +82,10 @@ Edit the text in quotes to your actual username and password. Save the file and 
 
 ### <ins>Firefox and Other Web Drivers</ins>:
 
-The default webdriver for this script is `Firefox`, which was the original web browser used in writing this script and executing the code. 
-
+The default webdriver for this script is `Firefox`, which was the original web browser used in writing this script and executing the code.\
 From a development perspective `Firefox` offers a better interface to inspect the HTML code needed in writing the scraper.
 
+&nbsp;
 
 However, other webdrivers, *e.g.* `Chrome`, `Safari`, and/or `Edge` may be used. 
 
