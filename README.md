@@ -12,7 +12,9 @@ It is designed to automate sharing the listings for every item in your closet wi
 
 Once the script is executed, it will share the requested listings every 120 minutes. You can edit the timing and other options if you desire.
 
-# Let the Share War Begin
+&nbsp
+
+## Let the Share War Begin
 
 ### Prerequisites
 
@@ -23,6 +25,7 @@ Once the script is executed, it will share the requested listings every 120 minu
 
 To install Python3 requirements, you may run `pip install -r requirements.txt`. You will also need a recent version of Firefox (or another webdriver of your choice). If using Firefox, you will also likely need to install `geckodriver`, which on macOS can be accomplished using [Homebrew](https://brew.sh/) with the command `brew install geckodriver` in terminal.
 
+------
 
 ## Setup
 
