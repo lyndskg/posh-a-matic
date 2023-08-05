@@ -81,7 +81,9 @@ To learn more about setting up the appropriate web driver, visit the Selenium we
 
 In terminal run the following command: `python share.py`, which will run the script with the default options (see below).
 
-*Note:* If you have several versions of python, you will need to amend the above line to run your python 3 alias, *e.g.* `python3 share.py`.
+__*<ins>Note</ins>:*__ If you have several versions of `python`, you will need to amend the above line to run your python 3 alias, *e.g.* `python3 share.py`.
+
+&nbsp;
 
 ## Advanced Options
 
