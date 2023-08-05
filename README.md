@@ -5,17 +5,21 @@
 
 &nbsp;
 
+## Project Overview
 This script is designed for users with a [seller account on Poshmark marketplace](https://poshmark.com).
 
-`poshamatic`'s primary functionalities include: 
-> - automated sharing of the listings for every item in your closet with all subscribers, or
-> - automated sharing of all the listings of another Poshmark account. 
-
-&nbsp;
 
 Once the script is executed, it will share the requested listings every 120 minutes. 
 
 *You can edit the timing and other options if you desire.*
+
+&nbsp;
+
+### Objectives:
+
+`poshamatic`'s primary functionalities include: 
+> - automated sharing of the listings for every item in your closet with all subscribers, or
+> - automated sharing of all the listings of another Poshmark account. 
 
 &nbsp;
 
