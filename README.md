@@ -1,3 +1,4 @@
+
 <a name="top"></a>
 
 ![](https://d2zlsagv0ouax1.cloudfront.net/assets/home_page/hp-v5-logo@2x-6003c7f00d83f4df697830d18bdcf167.png)
@@ -36,12 +37,14 @@ Once the script is executed, it will share the requested listings every 120 minu
 > - `Firefox`: v.*69.0.1+*
 > - [`Selenium`](http://selenium-python.readthedocs.io): v.*3.141.0+*
 > - [`Numpy`](https://numpy.org/): v.*1.15.2+*
+> - `geckodriver`
+> - `webdriver_manager`
+> - `pyautogui`
+> - `selenium-wire`
 
 &nbsp;
 
 To install `Python3` requirements, you may run `pip install -r requirements.txt`. 
-
-
 
 
 
