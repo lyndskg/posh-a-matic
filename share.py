@@ -22,7 +22,7 @@ from webdriver_manager.microsoft import EdgeDriverManager
 logging.basicConfig(
     filename='share.log',  # Specify the log file name
     level=logging.DEBUG, # Set the logging level to DEBUG or higher
-    format='[%(levelname)s] %(asctime)s - %(message)s') # Specify the log message format
+    format='[%(levelname)s] %(asctime)s - %(message)s' # Specify the log message format
 )
 logger = logging.getLogger(__name__)
 
@@ -132,8 +132,8 @@ def login(debugger=False):
                     handle_captcha()  # Call the handle_captcha function
                     retries += 1  # Increment the retries counter
 
-                    if login(debugger=True)  # Retry login after manual intervention
-                return
+                    if login(debugger = True):  # Retry login after manual intervention
+                        return
                     continue
             except NoSuchElementException:
                 pass
@@ -278,7 +278,7 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
         [*] the share war will continue in {} minutes...
             current time: {}
         '''.format(loop_delay, current_time)))
-     logger.info(textwrap.dedent('''
+    logger.info(textwrap.dedent('''
         [*] the share war will continue in {} minutes...
             current time: {}
         '''.format(loop_delay, current_time)))
@@ -398,7 +398,7 @@ def clicks_share_followers(share_icon, d=4.5):
 
     ## First share click
     driver.execute_script("arguments[0].click();", share_icon); 
-    time.sleep(get_random_delay(d)
+    time.sleep(get_random_delay(d))
 
     ## Second share click
     share_pat = "//a[@class='pm-followers-share-link grey']"
@@ -514,8 +514,9 @@ if __name__ == "__main__":
             [*] You may need to uncomment poshmark_username and 
                 poshmark_password in credentials.py
             '''))
-        sys.exit()
-    )
+    
+    sys.exit()
+    
 
     ## Poshmark closet URL only works with username, so verify
     ## that the user is not using their email address to log in.
