@@ -35,7 +35,7 @@ Once the script is executed, it will share the requested listings every 120 minu
 ### <ins>Prerequisites</ins>
 > - `Python`: v.*3.5+*
 > - `Firefox`: v.*69.0.1+*
-> - [`Selenium`](http://selenium-python.readthedocs.io): v.*3.141.0+*
+> - [`Selenium`](http://selenium-python.readthedocs.io): v.*4.11.0+*
 > - [`Numpy`](https://numpy.org/): v.*1.15.2+*
 > - `geckodriver`
 > - `webdriver_manager`
