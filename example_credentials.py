@@ -1,4 +1,3 @@
-
 #poshmark_username = "poshmarkusername"
 #poshmark_password = "poshmarkpassword"
 
