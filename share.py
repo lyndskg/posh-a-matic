@@ -35,27 +35,24 @@ DRIVER OPTIONS = {
 }
 
 def setup_driver(driver_name):
-    try:
-        driver_name = driver_name.lower()
-        if driver_name in DRIVER_OPTIONS:
-            options = DRIVER_OPTIONS[driver_name]()
-            if driver_name == 'chrome' or driver_name == '0':
-                driver = webdriver.Chrome(options=options)
-            elif driver_name == 'safari' or driver_name == '1':
-                driver = webdriver.Safari(options=options)
-            elif driver_name == 'firefox' or driver_name == '2':
-                driver = webdriver.Firefox(options=options)
-            elif driver_name == 'edge' or driver_name == '3':
-                driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=options)
-            else:
-                raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
-            return driver
-        else:
-            raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
-    except Exception as e:
-        logger.error("Error occurred while initializing the driver: %s", e)
-        sys.exit(1)
-
+    driver_name = driver_name.lower()
+    driver_mapping = {
+        'chrome': webdriver.Chrome,
+        'firefox': webdriver.Firefox,
+        'safari': webdriver.Safari,
+        'edge': webdriver.Edge,
+        '0': webdriver.Chrome,
+        '1': webdriver.Safari,
+        '2': webdriver.Firefox,
+        '3': webdriver.Edge
+    }
+    
+    if driver_name in driver_mapping:
+        options = DRIVER_OPTIONS[driver_name]()
+        driver = driver_mapping[driver_name](options=options)
+        return driver
+    else:
+        raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
 
 
 def setup_driver(driver_name):
