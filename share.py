@@ -429,7 +429,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
             time.sleep(get_random_delay(10))
 
             # Time Delay: While Loop
-            random_loop_time = random.choice(loop_time)
+            random_loop_time = random(loop_time)
             time.sleep(get_random_delay(random_loop_time - ((time.time() - starttime) % random_loop_time)))
 
         except NoSuchElementException as e:
