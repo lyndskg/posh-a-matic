@@ -9,6 +9,7 @@ import textwrap
 import time
 
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.safari.options import Options as SafariOptions
@@ -16,8 +17,6 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeDriverManager
-
-
 
 # Configure the logger
 logging.basicConfig(
@@ -27,55 +26,37 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-DRIVER OPTIONS = {
-    'chrome': ChromeOptions,
-    'safari': SafariOptions,
-    'firefox': FirefoxOptions,
-    'edge': EdgeOptions
+# Constants for web drivers
+DRIVER_CHROME = 'chrome'
+DRIVER_SAFARI = 'safari'
+DRIVER_FIREFOX = 'firefox'
+DRIVER_EDGE = 'edge'
+
+# Mapping dictionary for drivers
+DRIVER_OPTIONS = {
+    DRIVER_CHROME: webdriver.Chrome,
+    DRIVER_SAFARI: webdriver.Safari,
+    DRIVER_FIREFOX: webdriver.Firefox,
+    DRIVER_EDGE: webdriver.Edge,
 }
 
-def setup_driver(driver_name):
-    driver_name = driver_name.lower()
-    driver_mapping = {
-        'chrome': webdriver.Chrome,
-        'firefox': webdriver.Firefox,
-        'safari': webdriver.Safari,
-        'edge': webdriver.Edge,
-        '0': webdriver.Chrome,
-        '1': webdriver.Safari,
-        '2': webdriver.Firefox,
-        '3': webdriver.Edge
-    }
-    
-    if driver_name in driver_mapping:
-        options = DRIVER_OPTIONS[driver_name]()
-        driver = driver_mapping[driver_name](options=options)
-        return driver
-    else:
-        raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
-
-
+# Function to set up the driver
 def setup_driver(driver_name):
     try:
-        if driver_name == '0' or driver_name.lower() == 'chrome':
-            chrome_options = ChromeOptions()
-            driver = webdriver.Chrome(options=chrome_options)
-        elif driver_name == '1' or driver_name.lower() == 'safari':
-            safari_options = SafariOptions()
-            driver = webdriver.Safari(options=safari_options)
-        elif driver_name == '2' or driver_name.lower() == 'firefox':
-            firefox_options = FirefoxOptions()
-            driver = webdriver.Firefox(options=firefox_options)
-        elif driver_name == '3' or driver_name.lower() == 'edge':
-            edge_options = EdgeOptions()
-            driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=edge_options)
+        driver_name = driver_name.lower()
+        if driver_name in DRIVER_OPTIONS:
+            options = DRIVER_OPTIONS[driver_name]()
+            if driver_name == DRIVER_EDGE:
+                driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=options)
+            else:
+                driver = DRIVER_OPTIONS[driver_name](options=options)
+            return driver
         else:
             raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
-        return driver
     except Exception as e:
         logger.error("Error occurred while initializing the driver: %s", e)
         sys.exit(1)
-        
+    
 
 # Add the handle_captcha function
 def handle_captcha():
@@ -432,6 +413,7 @@ def open_closet_item_url(url):
     time.sleep(get_random_delay(5))
 
 
+# Main loop implementation
 def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
     max_retries = 5  # Set the maximum number of retries
     while True:
@@ -447,7 +429,7 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
             time.sleep(get_random_delay(10))
 
             # Time Delay: While Loop
-            random_loop_time = random(loop_time)
+            random_loop_time = random.choice(loop_time)
             time.sleep(get_random_delay(random_loop_time - ((time.time() - starttime) % random_loop_time)))
 
         except NoSuchElementException as e:
@@ -491,9 +473,8 @@ def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
 
 
 
-if __name__=="__main__":
-
-    
+if __name__ == "__main__":
+        
     ##################################
     ## Arguments for Script
     ##################################
@@ -505,7 +486,6 @@ if __name__=="__main__":
         ):
             pass
 
-    ## Check to ensure user has created the credentials.py file
     exists = os.path.isfile('./credentials.py')
     if not exists:
         logger.info(textwrap.dedent('''
@@ -523,18 +503,19 @@ if __name__=="__main__":
     else:
         import credentials
 
-
+    
     ## Fail gracefully if the username or password not specified
     try:
         poshmark_username = credentials.poshmark_username
         poshmark_password = credentials.poshmark_password
     except AttributeError:
-        logger.info(textwrap.dedent('''
+       logger.info(textwrap.dedent('''
             [*] ERROR: Username and/or password not specified...
             [*] You may need to uncomment poshmark_username and 
                 poshmark_password in credentials.py
             '''))
         sys.exit()
+    )
 
     ## Poshmark closet URL only works with username, so verify
     ## that the user is not using their email address to log in.
@@ -607,7 +588,7 @@ if __name__=="__main__":
     ##################################
     ## Set up Webdriver
     ##################################
-   
+
     try:
         driver = setup_driver(args.driver)
     except ValueError as e:
@@ -618,5 +599,36 @@ if __name__=="__main__":
 
     driver.quit()
     sys.exit()
+
+    
+if __name__=="__main__":
+
+
+    ## Poshmark closet URL only works with username, so verify
+    ## that the user is not using their email address to log in.
+    if '@' in poshmark_username:
+        logger.info(textwrap.dedent('''
+                    [*] Do not your user email address to log in...
+                        use your Poshmark username (closet) instead...
+                    '''))
+        sys.exit()
+
+
+    parser = argparse.ArgumentParser(
+        description=textwrap.dedent('''
+        [*] Help file for share.py
+            from the poshmark_sharing repository:
+            https://github.com/jmausolf/poshmark_sharing
+        '''),
+        usage='use "python %(prog)s --help" for more information',
+        formatter_class=RawTextArgumentDefaultsHelpFormatter)
+    parser.add_argument("-t", "--time", default=14400, type=float,
+        help=textwrap.dedent('''\
+            loop time in seconds to repeat the code
+
+            :: example, repeat in two hours:
+            -t 7200
+            '''))
+
        
 
