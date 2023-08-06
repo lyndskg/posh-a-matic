@@ -63,10 +63,10 @@ You will also need a recent version of `Firefox` (or another webdriver of your c
 ### <ins>Git Clone</ins>:
 
 First clone the repository in terminal:
-* `git clone https://github.com/lyndskg/poshamatic`
+* `git clone https://github.com/lyndskg/posh-a-matic`
 
 Change directories to enter the local repository:
-* `cd poshamatic`
+* `cd posh-a-matic`
 
 <p align="right"><a href="#top">(back to top)</a></p>
 
@@ -78,7 +78,7 @@ You will need to create a `credentials.py` file.
 
 It is recommended to simply edit the `example_credentials.py` file and rename it.
 
-```python
+```python3
 poshmark_username = "poshmarkusername"
 poshmark_password = "poshmarkpassword"
 ```
