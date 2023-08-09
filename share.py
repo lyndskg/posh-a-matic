@@ -7,16 +7,25 @@ import random
 import sys
 import textwrap
 import time
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+
+# TODO: Handle safari driver manager 
+from selenium.webdriver.safari.webdriver import WebDriver as SafariDriver
 from selenium.webdriver.safari.options import Options as SafariOptions
+
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.edge.options import Options as EdgeOptions
 from webdriver_manager.firefox import GeckoDriverManager
-from webdriver_manager.microsoft import EdgeDriverManager
+
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.webdriver.edge.options import Options as EdgeOptions
 
 # Configure the logger
 logging.basicConfig(
@@ -32,7 +41,7 @@ DRIVER_SAFARI = 'safari'
 DRIVER_FIREFOX = 'firefox'
 DRIVER_EDGE = 'edge'
 
-# Mapping dictionary for drivers
+# # Mapping dictionary for drivers
 DRIVER_OPTIONS = {
     DRIVER_CHROME: webdriver.Chrome,
     DRIVER_SAFARI: webdriver.Safari,
@@ -43,23 +52,116 @@ DRIVER_OPTIONS = {
 # Function to set up the driver
 def setup_driver(driver_name):
     try:
+        # Convert the driver_name to lowercase for consistent comparison
         driver_name = driver_name.lower()
+
+        # Check if the provided driver_name is supported
         if driver_name in DRIVER_OPTIONS:
-            options = DRIVER_OPTIONS[driver_name]()
-            if driver_name == DRIVER_EDGE:
-                driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=options)
-            else:
-                driver = DRIVER_OPTIONS[driver_name](options=options)
-            return driver
-        else:
-            raise ValueError("Driver argument value not supported! Check the help (-h) argument for supported values.")
+            # Check the specific driver_name to create the appropriate driver instance
+            if driver_name == DRIVER_CHROME:
+                # Create an instance of ChromeOptions
+                chrome_options = ChromeOptions()
+                # Create a Chrome driver instance with ChromeDriverManager and pass chrome_options as an argument
+                driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+                driver.implicitly_wait(10)
+                return driver
+            # TODO: EXTEND SAFARI FUNCTIONALITIES
+            elif driver_name == DRIVER_SAFARI:
+                # Create an instance of SafariOptions 
+                safari_options = SafariOptions()
+                # Create a Safari driver instance with SafariDriver and pass safari_options as an argument
+                driver = webdriver.Safari(SafariDriver().install(), options = safari_options)
+                driver.implicitly_wait(10)
+                return driver
+            elif driver_name == DRIVER_FIREFOX:
+                # Create an instance of FirefoxOptions 
+                firefox_options = FirefoxOptions()
+                # Create a Firefox driver instance with GeckoDriverManager and pass firefox_options as an argument
+                driver = webdriver.Firefox(options = firefox_options)
+                driver.implicitly_wait(10)
+                return driver
+            elif driver_name == DRIVER_EDGE:
+                # Create an instance of EdgeOptions
+                edge_options = EdgeOptions()
+                # Create an Edge driver instance with EdgeChromiumDriverManager and pass edge_options as an argument
+                driver = webdriver.Edge(EdgeChromiumDriverManager().install(), options = edge_options)
+                driver.implicitly_wait(10)
+                return driver
+            else: 
+                # Print an error message to the console and log the error
+                print(textwrap.dedent('''
+                    [*] ERROR Driver argument value not supported!
+                        Check the help (-h) argument for supported values.
+                    '''))
+            
+                logger.info(textwrap.dedent('''
+                    [*] ERROR Driver argument value not supported!
+                        Check the help (-h) argument for supported values.
+                    '''))
+
+    except ValueError as v:
+        # Log and display error messages if a ValueError occurs   
+        logger.error("Error occurred during driver setup: %s", v)
+        
+        print("[*] ERROR Driver argument value not supported! Check the help (-h) argument for supported values.")
+        
+        logger.info("[*] ERROR Driver argument value not supported! Check the help (-h) argument for supported values.")
+        sys.exit(-1)
+
+    except NameError as n:
+        # Log and display error messages if a NameError occurs
+        logger.error("Error occurred during driver setup: %s", n)
+        
+        print(textwrap.dedent('''
+            [*] ERROR You don't have the web driver for argument
+                given ({}) you need to download it, go here for
+                installation info:
+                https://selenium-python.readthedocs.io/installation.html#drivers
+            '''.format(driver)))
+        
+        logger.info(textwrap.dedent('''
+            [*] ERROR You don't have the web driver for argument
+                given ({}) you need to download it, go here for
+                installation info:
+                https://selenium-python.readthedocs.io/installation.html#drivers
+            '''.format(driver)))
+        
+        sys.exit(-2)
+
     except Exception as e:
+        # Log and display error messages
         logger.error("Error occurred while initializing the driver: %s", e)
-        sys.exit(1)
-    
+        
+        print(textwrap.dedent('''
+            [*] ERROR the selected driver may not be setup correctly. 
+                Ensure you can access it from the command line and 
+                try again. 
+                {}
+            '''.format(e)))
+
+        logger.info(textwrap.dedent('''
+            [*] ERROR the selected driver may not be setup correctly. 
+                Ensure you can access it from the command line and 
+                try again. 
+                {}
+            '''.format(e)))
+        
+        sys.exit(-3)
+    else: 
+        pass
+
 
 # Add the handle_captcha function
 def handle_captcha():
+
+    # Print informative messages about CAPTCHA challenge
+    print("[*] ERROR in Share : Thwarted by Captchas")
+    print("[*] Please open the browser to the Poshmark login page.")
+    print("[*] Solve the CAPTCHA and log in as a human.")
+    print("[*] Once you've successfully logged in, come back here.")
+    print("[*] Press Enter to continue the script after solving the CAPTCHA.")
+
+    # Log informative messages about CAPTCHA challenge
     logger.info("[*] ERROR in Share : Thwarted by Captchas")
     logger.info("[*] Please open the browser to the Poshmark login page.")
     logger.info("[*] Solve the CAPTCHA and log in as a human.")
@@ -72,51 +174,70 @@ def handle_captcha():
     # Check if the user wants to quit the script
     quit_choice = input().lower().strip()
     if quit_choice == 'q':
+        # Print and log that the user chose to exit the script and exit
+        print("[*] Exiting the script.")
         logger.info("[*] Exiting the script.")
-        sys.exit()
+
+        sys.exit(-4)
+
 
 # Add the check_quit_input function
 def check_quit_input():
+    # Define the quit message for user input
     quit_mes = textwrap.dedent('''
         [*] if you would like to quit, enter [q]
             otherwise, enter any other key to continue
     ''')
+    # Prompt the user with the quit message and store their input
     quit_selection = input(quit_mes)
-    qs = str(quit_selection).lower()
+    qs = str(quit_selection).lower() # Convert input to lowercase
+    
+    # Check if the user's input is 'q' (quit)
     if qs == 'q':
-        global quit_input
-        quit_input = True
+        global quit_input # Access the global quit_input variable
+        quit_input = True # Set the global variable to True (indicating user wants to quit)
     else:
-        pass
+        pass # If user doesn't want to quit, continue with the script
 
         
 # Modify the login function
-def login(debugger=False):
-    max_retries = 5  # Set the maximum number of retries
+def login(debugger = False):
+    # Set the maximum number of retries
+    max_retries = 5 
     retries = 0
     
+    # If debugger flag is True, enable Python debugger (pdb)
     if debugger is True:
         import pdb; pdb.set_trace()
     else:
-        pass
+        pass # Otherwise, continue without debugger
 
+    # URL of the Poshmark login page
     url = "https://poshmark.com/login"
-    driver.get(url)
+    driver.get(url) # Open the URL in the driver's browser
 
-    time.sleep(get_random_delay(5))
+    time.sleep(get_random_delay(5)) # Wait for a random delay before proceeding
 
+    # Attempt login with retry mechanism
     while retries < max_retries:
         try:
-            ## Login
-            logger.info(textwrap.dedent('''
-                [*] logging into Poshmark seller account: {}...
-                    the share war will begin momentarily...
+            ## Perform login
+            print(textwrap.dedent('''
+                [*] Logging into Poshmark seller account "{}" ...
+                    The share war will begin momentarily...
                 '''.format(poshmark_username)))
-            username = driver.find_element_by_name("login_form[username_email]")
+            
+            logger.info(textwrap.dedent('''
+                [*] Logging into Poshmark seller account "{}" ...
+                    The share war will begin momentarily...
+                '''.format(poshmark_username)))
+            
+            username = driver.find_element(By.NAME, "login_form[username_email]")
             username.send_keys(poshmark_username)
+
             time.sleep(get_random_delay(5))
 
-            password = driver.find_element_by_name("login_form[password]")
+            password = driver.find_element(By.NAME, "login_form[password]")
             password.send_keys(poshmark_password)
             time.sleep(get_random_delay(5))
 
@@ -126,13 +247,18 @@ def login(debugger=False):
             ## Check for Captcha
             try:
                 captcha_pat = "//span[@class='base_error_message']"
-                captcha_fail = driver.find_element_by_xpath(captcha_pat)
+                captcha_fail = driver.find_element(By.XPATH, "captcha_pat")
+                ## If Captcha is detected
                 if len(str(captcha_fail)) > 100:
+                    print("Captcha detected. Manual intervention required.")
                     logger.info("Captcha detected. Manual intervention required.")
+                    
                     handle_captcha()  # Call the handle_captcha function
+                    
                     retries += 1  # Increment the retries counter
 
-                    if login(debugger = True):  # Retry login after manual intervention
+                    # Retry login after manual intervention
+                    if login(debugger = True): 
                         return
                     continue
             except NoSuchElementException:
@@ -142,60 +268,80 @@ def login(debugger=False):
             break
 
         except Exception as e:
-            # Captcha Catch
+            # Handle Captcha Challenge
+            print(textwrap.dedent('''
+                [*] ERROR in Share Bot: Thwarted by Captchas
+                    you may now attempt to login with the python debugger
+                '''))
+            
             logger.info(textwrap.dedent('''
                 [*] ERROR in Share Bot: Thwarted by Captchas
                     you may now attempt to login with the python debugger
                 '''))
+            
             logger.error("Error occurred during login: %s", e)
+
             check_quit_input()
+
             if quit_input:
                 break
+
             retries += 1  # Increment the retries counter
+
             time.sleep(get_random_delay(30)) # Wait for a few seconds before retrying
 
     else:
         # The loop completed without successful login, handle the situation accordingly
         logger.info("Login failed after multiple attempts. Exiting the script.")
-        sys.exit()
+        
+        sys.exit(-5)
     
     # Continue with the rest of the login process
     time.sleep(get_random_delay(10))
+
     seller_page = get_seller_page_url(args.account)
     driver.get(seller_page)
 
-    ## Confirm Account to Share If Not Username
-    if args.bypass == True:
+    ## Confirm account to share if not username
+    if (args.bypass == True):
         pass
     else:
-        if args.account != poshmark_username:
+        if (args.account != poshmark_username):
             confirm_account_sharing(args.account, poshmark_username)
-            if quit_input is True:
+            
+            if (quit_input is True):
                 return False
             else:
                 pass
+
         else:
             pass
                 
     return True
     
 
-def deploy_share_bot(driver, n=3, order=True, random_subset=0):
+# Define the deploy_share_bot function
+def deploy_share_bot(driver, n = 3, order = True, random_subset = 0):
+    # Log and print the initiation of the share bot
     logger.info("[*] DEPLOYING SHARE BOT")
+    print("[*] DEPLOYING SHARE BOT")
     
     try:
-        if login() is True:
-            pass
+        # Attempt to perform the following steps within a try block
+        if login():
+            pass  # If login is successful, continue; otherwise, return
         else:
-            return
+            return # If login is not successful, exit the function
 
+        # Scroll the page to load more items
         scroll_page(n)
 
         ## Share Icons and Order
+        # Get the icons of items available for sharing
         share_icons = get_closet_share_icons()
 
         if order is True:
-            share_icons.reverse()
+            share_icons.reverse() # Reverse the order of sharing icons if specified
         else:
             pass
 
@@ -203,273 +349,292 @@ def deploy_share_bot(driver, n=3, order=True, random_subset=0):
         if random_subset != 0:
             try:
                 random_subset = int(random_subset)
+                # Log and print information about sharing a random subset of items
+                logger.info(textwrap.dedent('''
+                    [*] you have selected to share a random subset of {} items
+                        from all {} PoshMark listings in the closet...
+                        please wait...
+                    '''.format(random_subset, len(share_icons))))
+                
                 print(textwrap.dedent('''
                     [*] you have selected to share a random subset of {} items
                         from all {} PoshMark listings in the closet...
                         please wait...
                     '''.format(random_subset, len(share_icons))))
 
+                # Randomly select a subset of items to share
                 share_icons = np.random.choice(share_icons, random_subset, replace=False).tolist()
 
             except Exception as e:
+                print("Error occurred while selecting random subset: %s", e)
                 logger.warning("Error occurred while selecting random subset: %s", e)
-                pass
+                pass  # If there's an error, log a warning and continue
         else:
             pass
 
         ## Share Message
+        # Log and print the sharing message with the number of items to be shared
         logger.info(textwrap.dedent('''
+            [*] sharing PoshMark listings for {} items in closet...
+                please wait...
+            '''.format(len(share_icons))))
+        
+        print(textwrap.dedent('''
             [*] sharing PoshMark listings for {} items in closet...
                 please wait...
             '''.format(len(share_icons))))
     
         
-        ## Share Listings using Chrome driver
+        ## Share Listings
+        # Iterate through each item and share it with followers
         for item in share_icons:
             clicks_share_followers(item)
-            # Access the requests captured by selenium-wire for Chrome
-            for request in chrome_driver.requests:
+
+            # Access and log the captured requests using selenium-wire
+            for request in driver.requests:
                 if request.response:
+                    print(request.url)
                     logger.info(request.url)
+
+                    print(request.method)
                     logger.info(request.method)
+
+                    print(request.reponse.status_code)
                     logger.info(request.response.status_code)
+
+                    print(request.response.headers)
                     logger.info(request.response.headers)
                     
 
-        # Access the requests captured by selenium-wire for Safari
-            for request in safari_driver.requests:
-                if request.response:
-                    logger.info(request.url)
-                    logger.info(request.method)
-                    logger.info(request.response.status_code)
-                    logger.info(request.response.headers)
+        
+        # Log and print successful sharing completion message
+        logger.info("[*] closet successfully shared...posh-on...")
+        print("[*] closet successfully shared...posh-on...")
 
-        ## Share Listings using Firefox driver
-        for item in share_icons:
-            clicks_share_followers(item)
-            # Access the requests captured by selenium-wire for Firefox
-            for request in firefox_driver.requests:
-                if request.response:
-                    logger.info(request.url)
-                    logger.info(request.method)
-                    logger.info(request.response.status_code)
-                    logger.info(request.response.headers)
-                    
-        # Access the requests captured by selenium-wire for Edge
-            for request in edge_driver.requests:
-                if request.response:
-                    logger.info(request.url)
-                    logger.info(request.method)
-                    logger.info(request.response.status_code)
-                    logger.info(request.response.headers)
-
-            logger.info("[*] closet successfully shared...posh-on...")
         pass
         
     except Exception as e:
+        # Catch and log and print any exceptions that occurred during the share bot deployment
         logger.info("[*] ERROR in Share Bot")
+        print("[*] ERROR in Share Bot")
+
         logger.error("Error occurred during share war deployment: %s", e)
-        pass
+        print("Error occurred during share war deployment: %s", e)
+
+        pass # Continue the script even if an error occurred
 
     ## Closing Message
+    # Calculate loop delay in minutes and format the current time
     loop_delay = int(random_loop_time/60)
     current_time = time.strftime("%I:%M%p on %b %d, %Y")
-    print(textwrap.dedent('''
-        [*] the share war will continue in {} minutes...
-            current time: {}
-        '''.format(loop_delay, current_time)))
+
+    # Log and print the delay and current time before the next iteration
     logger.info(textwrap.dedent('''
         [*] the share war will continue in {} minutes...
             current time: {}
         '''.format(loop_delay, current_time)))
-
-
+    
+    print(textwrap.dedent('''
+        [*] the share war will continue in {} minutes...
+            current time: {}
+        '''.format(loop_delay, current_time)))
+    
 
 
 # Add the simulate_human_interaction function
 def simulate_human_interaction():
     try:
-        # Simulate mouse movement
+        # Simulate mouse movement to create a human-like interaction pattern
         x, y = pyautogui.position()
+        
+        # Move the mouse cursor slightly to different positions
         pyautogui.moveTo(x + 10, y + 10, duration=0.5)
         pyautogui.moveTo(x - 10, y - 10, duration=0.5)
         pyautogui.moveTo(x, y, duration=0.5)
 
-        # Scroll up and down
+        # Scroll up and down to mimic human scrolling behavior
         pyautogui.scroll(3)
+        
+        # Pause for a random delay before further interaction
         time.sleep(get_random_delay_for_interaction(2))
-        pyautogui.scroll(-3)
+        
+        pyautogui.scroll(-3)  # Scroll back up
+
     except Exception as e:
+        # Catch and log any exceptions that occurred during simulating interaction
         logger.warning("Error occurred during simulating human interaction: %s", e)
-        pass
+        print("Error occurred during simulating human interaction: %s", e)
+
+        pass  # Continue the script even if an error occurred
 
 
+# Define the get_random_delay function
 def get_random_delay(mean_delay):
+    # Generate a list of random times, adding two random values and the mean delay
     times = np.random.rand(1000) + np.random.rand(1000) + mean_delay
+   
+    # Choose and return a random time from the generated list
     return np.random.choice(times, 1).tolist()[0]
 
+
+# Define the get_random_delay_for_interaction function
 def get_random_delay_for_interaction(mean_delay):
+    # Call the get_random_delay function to get a random delay
     return get_random_delay(mean_delay)
 
 
+# Define the confirm_account_sharing function
 def confirm_account_sharing(account, username):
-
-        ## Get User Input
+    try:
+        # Get user input for confirming account sharing request
         logger.info(textwrap.dedent('''
-            [*] you have requested to share
-                the items in another poshmark closet:
+            [*] You have requested to share
+                the items in another Poshmark closet:
                 ------------------------------------
                 [*]: {}
                 ------------------------------------
             '''.format(account)))
+        
+        print(textwrap.dedent('''
+            [*] You have requested to share
+                the items in another Poshmark closet:
+                ------------------------------------
+                [*]: {}
+                ------------------------------------
+            '''.format(account)))
+        
         confirm_mes = (textwrap.dedent('''
-            [*] to confirm this request, enter [y]
-                to cancel and share your closet items instead enter [n] :
+            [*] To confirm this request, enter [y].
+                To cancel and share your closet items instead, enter [n]:
             '''))
-
+        
         confirm_selection = input(confirm_mes)
         cs = str(confirm_selection).lower()
+        
         if cs == 'y':
-            pass
+            pass  # Proceed with account sharing
         elif cs == 'n':
-            ## Redirect to users's closet page
+            # Redirect to the user's own closet page
             seller_page = get_seller_page_url(username)
             driver.get(seller_page)
         else:
-            logger.info('[*] you have entered an invalid selection...')
-            check_quit_input()
+            # Handle invalid selection from the user
+            logger.info('[*] You have entered an invalid selection...')
+            print('[*] You have entered an invalid selection...')
+            check_quit_input()  # Check if the user wants to quit
+            
             if quit_input is True:
                 pass
             else:
-               confirm_account_sharing(account, username)
+                confirm_account_sharing(account, username)  # Recurse to reconfirm
+        
+    except Exception as e:
+        # Catch and log any exceptions that occurred during account sharing confirmation
+        logger.warning("Error occurred during account sharing confirmation: %s", e)
+        print("Error occurred during account sharing confirmation: %s", e)
+        
+        pass  # Continue the script even if an error occurred
 
 
-
+# Define the get_seller_page_url function
 def get_seller_page_url(poshmark_account):
+    # Generate the URL for the seller's Poshmark closet page
     url_stem = 'https://poshmark.com/closet/'
     available = '?availability=available'
     url = '{}{}{}'.format(url_stem, poshmark_account, available)
+    
     return url
 
 
-def scroll_page(n, delay=3):
+# Define the scroll_page function
+def scroll_page(n, delay = 3):
     try:
         scroll = 0
         screen_heights = [0]
     
-        logger.info("[*] scrolling through all items in closet...")
+        logger.info("[*] Scrolling through all items in closet...")
+        print("[*] Scrolling through all items in closet...")
     
-        for i in range(1, n+1):
-            scroll +=1
+        for i in range(1, n + 1):
+            scroll += 1
             scroll_script = "window.scrollTo(0, document.body.scrollHeight);"
             driver.execute_script(scroll_script)
+
             height = driver.execute_script("return document.documentElement.scrollHeight")
             last_height = screen_heights[-1:][0]
     
             if height == last_height:
-                return
+                return  # Reached the end of the page, exit
             else:
                 screen_heights.append(height)
-                time.sleep(get_random_delay(delay))
+                time.sleep(get_random_delay(delay))  # Pause with random delay
+   
     except Exception as e:
+        # Catch and log any exceptions that occurred during page scrolling
         logger.warning("Error occurred during page scrolling: %s", e)
-        pass
+        print("Error occurred during page scrolling: %s", e)
+        
+        pass  # Continue the script even if an error occurred
 
 
+# Define the get_closet_urls function
 def get_closet_urls():
-    items = driver.find_elements_by_xpath("//div[@class='item-details']")
-    urls = [i.find_element_by_css_selector('a').get_attribute('href') for i in items]
+    # Find all items' details elements and extract their URLs
+    items = driver.find_elements(By.XPATH, "//div[@class='item-details']")
+    urls = [i.find_element(By.CSS_SELECTOR, "a").get_attribute('href') for i in items]
+    
     return urls
 
 
+# Define the get_closet_share_icons function
 def get_closet_share_icons():
     try:
         item_pat = "//div[@class='social-info social-actions d-fl ai-c jc-c']"
-        items = driver.find_elements_by_xpath(item_pat)
-        share_icons = [i.find_element_by_css_selector("a[class='share']") for i in items]
+        
+        # Find all share icons within the closet items and return them
+        items = driver.find_elements(By.XPATH, "item_pat")
+        share_icons = [i.find_element(By.CSS_SELECTOR, "a[class='share']") for i in items]
+        
         return share_icons
+    
     except Exception as e:
+        # Handle any exceptions that occurred during retrieving share icons
         logger.error("Error occurred while getting closet share icons: %s", e)
+        print("Error occurred while getting closet share icons: %s", e)  
+             
         return []
 
 
-
+# Define the clicks_share_followers function
 def clicks_share_followers(share_icon, d=4.5):
+    try:
+        ## First share click
+        driver.execute_script("arguments[0].click();", share_icon); 
+        time.sleep(get_random_delay(d))
 
-    ## First share click
-    driver.execute_script("arguments[0].click();", share_icon); 
-    time.sleep(get_random_delay(d))
+        ## Second share click
+        share_pat = "//a[@class='pm-followers-share-link grey']"
+        share_followers = driver.find_element(By.XPATH, "share_pat")
+        
+        driver.execute_script("arguments[0].click();", share_followers); 
+        time.sleep(get_random_delay(d))
+    
+    except Exception as e:
+        # Handle any exceptions that occurred during clicking share icons
+        logger.error("Error occurred while clicking share icons: %s", e)
+        print("Error occurred while clicking share icons: %s", e)
 
-    ## Second share click
-    share_pat = "//a[@class='pm-followers-share-link grey']"
-    share_followers = driver.find_element_by_xpath(share_pat)
-    driver.execute_script("arguments[0].click();", share_followers); 
-    time.sleep(get_random_delay(d))
+        pass
 
 
+# Define the open_closet_item_url function
 def open_closet_item_url(url):
     logger.info(url)
+    print(url)
+
+    # Open the provided URL and wait for a random delay
     driver.get(url)
     time.sleep(get_random_delay(5))
-
-
-# Main loop implementation
-def main_loop(driver, loop_time, number, order, random_subset, account, bypass):
-    max_retries = 5  # Set the maximum number of retries
-    while True:
-        try:
-            # Start Share Bot Loop
-            global quit_input  # Ensure we use the global quit_input variable
-            quit_input = False
-            deploy_share_bot(driver, number, order, random_subset)
-
-            if quit_input:
-                break
-
-            time.sleep(get_random_delay(10))
-
-            # Time Delay: While Loop
-            random_loop_time = random(loop_time)
-            time.sleep(get_random_delay(random_loop_time - ((time.time() - starttime) % random_loop_time)))
-
-        except NoSuchElementException as e:
-            # Handle NoSuchElementException
-            logger.error("Element not found: %s", e)
-            check_quit_input()
-            if quit_input:
-                driver.quit()
-                sys.exit()
-            else:
-                pass
-                
-        except Exception as e:
-            # Handle other exceptions
-            logger.error("ERROR: %s", e)
-            check_quit_input()
-            if quit_input:
-                pass
-            else:
-                # Sleep for some time before retrying
-                time.sleep(get_random_delay(30))
-                
-            # Retry loop
-            retries = 0
-            while retries < max_retries:
-                try:
-                    # Continue with the next iteration of the main loop
-                    break
-                except Exception as e:
-                    # Retry again
-                    logger.error("ERROR (Retry %d): %s", retries+1, e)
-                    time.sleep(get_random_delay(30))
-                    retries += 1
-            else:
-                # The loop completed without success, handle the situation accordingly
-                logger.error("Exceeded maximum retries. Exiting the script.")
-                sys.exit()
-
-    driver.quit()
-    sys.exit()
 
 
 
@@ -479,15 +644,18 @@ if __name__ == "__main__":
     ## Arguments for Script
     ##################################
 
-    ## Default Arguments with RawTextHelpFormatter
+     ## Create a custom argument formatter that supports raw text and default values
     class RawTextArgumentDefaultsHelpFormatter(
             argparse.ArgumentDefaultsHelpFormatter,
             argparse.RawTextHelpFormatter
         ):
             pass
 
+    
+     # Check if the 'credentials.py' file exists
     exists = os.path.isfile('./credentials.py')
     if not exists:
+        # Inform the user if 'credentials.py' does not exist and provide instructions
         logger.info(textwrap.dedent('''
             [*] ERROR: `credentials.py` file does not exist.
                 You may need to create the file, for example, 
@@ -499,48 +667,69 @@ if __name__ == "__main__":
             [*] Then edit credentials.py with your
                 poshmark closet and password.
                 '''))
-        sys.exit()
+        print(textwrap.dedent('''
+            [*] ERROR: `credentials.py` file does not exist.
+                You may need to create the file, for example, 
+                by copying `example_credentials.py`...
+
+            [*] In terminal, enter the following command:
+                cp example_credentials.py credentials.py
+
+            [*] Then edit credentials.py with your
+                poshmark closet and password.
+                '''))
+        
+        sys.exit(-6)
     else:
         import credentials
-
     
-    ## Fail gracefully if the username or password not specified
+    ## Fail gracefully if the username or password not specified in credentials.py
     try:
         poshmark_username = credentials.poshmark_username
         poshmark_password = credentials.poshmark_password
     except AttributeError:
-       logger.info(textwrap.dedent('''
+        # Inform the user if username and/or password is missing and provide instructions
+        logger.info(textwrap.dedent('''
             [*] ERROR: Username and/or password not specified...
             [*] You may need to uncomment poshmark_username and 
                 poshmark_password in credentials.py
             '''))
+        print(textwrap.dedent('''
+            [*] ERROR: Username and/or password not specified...
+            [*] You may need to uncomment poshmark_username and 
+                poshmark_password in credentials.py
+            '''))
+        sys.exit(-7)
     
-    sys.exit()
-    
-
-    ## Poshmark closet URL only works with username, so verify
-    ## that the user is not using their email address to log in.
+    ## Verify that the user is using their Poshmark username and not email
     if '@' in poshmark_username:
+        # Inform the user to use Poshmark username for login
         logger.info(textwrap.dedent('''
-                    [*] Do not your user email address to log in...
+                    [*] Do not use your email address to log in...
                         use your Poshmark username (closet) instead...
                     '''))
-        sys.exit()
+        print(textwrap.dedent('''
+                    [*] Do not use your email address to log in...
+                        use your Poshmark username (closet) instead...
+                    '''))
+        sys.exit(-8)
 
-
+    # Define the argument parser with description and custom formatter
     parser = argparse.ArgumentParser(
         description=textwrap.dedent('''
         [*] Help file for share.py
             from the poshmark_sharing repository:
-            https://github.com/jmausolf/poshmark_sharing
+            https://github.com/lyndskg/posh-a-matic
         '''),
-        usage='use "python %(prog)s --help" for more information',
+        usage = 'use "python3 %(prog)s --help" or "python3 share.py -h" for more information',
         formatter_class=RawTextArgumentDefaultsHelpFormatter)
+    
+    # Add command line arguments for different options
     parser.add_argument("-t", "--time", default=14400, type=float,
         help=textwrap.dedent('''\
             loop time in seconds to repeat the code
 
-            :: example, repeat in two hours:
+            :: example, repeat every two hours:
             -t 7200
             '''))
     parser.add_argument("-n", "--number", default=1000, type=int,
@@ -583,53 +772,96 @@ if __name__ == "__main__":
             -d Chrome
             -d 0
             '''))
+    
 
+    # Parse the command line arguments
     args = parser.parse_args()
 
+    # Handle case when account is not provided, use the one from credentials.py
+    if args.account is None:
+        args.account = credentials.poshmark_username
+    
     ##################################
-    ## Set up Webdriver
+    ## Run Script
     ##################################
 
-    try:
-        driver = setup_driver(args.driver)
-    except ValueError as e:
-        logger.error("ERROR: %s", e)
-        sys.exit()
+    ## Try to start driver
+    global driver
+    driver = setup_driver(args.driver) # Capture the returned driver
 
-    main_loop(driver, args.time, args.number, args.order, args.random_subset, args.account, args.bypass)
+    
+    ## Run Main App
+    ## Start Share War Loop
+    starttime = time.time()
+ 
+    max_retries = 5  # Set the maximum number of retries
+
+    global quit_input
+    quit_input = False
+
+    while quit_input is False:
+        try:
+            ## Time Delay: While Loop
+            random_loop_time = get_random_delay(args.time)
+
+            quit_input = False
+            deploy_share_bot(driver, args.number, args.order, args.random_subset)
+
+            if quit_input:
+                break
+
+            time.sleep(get_random_delay(10))
+            driver.close()
+
+            time.sleep(get_random_delay(random_loop_time - ((time.time() - starttime) % random_loop_time)))
+
+
+        except NoSuchElementException as e:
+            # Handle NoSuchElementException
+            logger.error("Element not found: %s", e)
+            print("Element not found: %s", e)
+
+            check_quit_input()
+
+            if quit_input:
+                driver.quit()
+                sys.exit(-9)
+            else:
+                pass
+                
+        except Exception as e:
+            # Handle other exceptions
+            logger.error("ERROR: %s", e)
+            print("ERROR: %s", e)
+
+            check_quit_input()
+
+            if quit_input:
+                pass
+            else:
+                # Sleep for some time before retrying
+                time.sleep(get_random_delay(30))
+                
+            # Retry loop
+            retries = 0
+            while retries < max_retries:
+                try:
+                    # Continue with the next iteration of the main loop
+                    break
+                except Exception as e:
+                    # Retry again
+                    logger.error("ERROR (Retry %d): %s", retries + 1, e)
+                    print("ERROR (Retry %d): %s", retries + 1, e)
+
+                    time.sleep(get_random_delay(30))
+                
+            else:
+                # The loop completed without success, handle the situation accordingly
+                logger.error("Exceeded maximum retries. Exiting the script.")
+                print("Exceeded maximum retries. Exiting the script.")
+
+                sys.exit(-10)
 
     driver.quit()
     sys.exit()
-
     
-if __name__=="__main__":
-
-
-    ## Poshmark closet URL only works with username, so verify
-    ## that the user is not using their email address to log in.
-    if '@' in poshmark_username:
-        logger.info(textwrap.dedent('''
-                    [*] Do not your user email address to log in...
-                        use your Poshmark username (closet) instead...
-                    '''))
-        sys.exit()
-
-
-    parser = argparse.ArgumentParser(
-        description=textwrap.dedent('''
-        [*] Help file for share.py
-            from the poshmark_sharing repository:
-            https://github.com/jmausolf/poshmark_sharing
-        '''),
-        usage='use "python %(prog)s --help" for more information',
-        formatter_class=RawTextArgumentDefaultsHelpFormatter)
-    parser.add_argument("-t", "--time", default=14400, type=float,
-        help=textwrap.dedent('''\
-            loop time in seconds to repeat the code
-
-            :: example, repeat in two hours:
-            -t 7200
-            '''))
-
-       
-
