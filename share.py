@@ -16,7 +16,8 @@ from selenium.webdriver.safari.options import Options as SafariOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from webdriver_manager.firefox import GeckoDriverManager
-from webdriver_manager.microsoft import EdgeDriverManager
+from selenium.webdriver.edge.service import Service as EdgeService
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 # Configure the logger
 logging.basicConfig(
@@ -47,7 +48,7 @@ def setup_driver(driver_name):
         if driver_name in DRIVER_OPTIONS:
             options = DRIVER_OPTIONS[driver_name]()
             if driver_name == DRIVER_EDGE:
-                driver = webdriver.Edge(executable_path=EdgeDriverManager().install(), options=options)
+                driver = webdriver.Edge(service=EdgeService(executable_path=EdgeChromiumDriverManager().install()), options=options)
             else:
                 driver = DRIVER_OPTIONS[driver_name](options=options)
             return driver
