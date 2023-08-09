@@ -36,10 +36,11 @@ Once the script is executed, it will share the requested listings every 120 minu
 > - `Python`: v.*3.5+*
 > - `Firefox`: v.*69.0.1+*
 > - [`Selenium`](http://selenium-python.readthedocs.io): v.*4.11.0+*
-> - [`Numpy`](https://numpy.org/): v.*1.15.2+*
-> - `geckodriver`
-> - `webdriver_manager`
-> - `pyautogui`
+>   - __<ins>Note</ins>:__ For Safari, `Selenium` must be v.*5+*
+> - [`Numpy`](https://numpy.org/): v.*1.25.2+*
+> - `webdriver_manager`: v.*4.0.0+*
+> - `pyautogui`: v.*0.9.54+*
+> - `logging`: v.*0.5.1.2+*
 
 &nbsp;
 
