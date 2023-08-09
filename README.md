@@ -49,8 +49,8 @@ To install `Python3` requirements, you may run `pip install -r requirements.txt`
 
 
 You will also need a recent version of `Firefox` (or another webdriver of your choice). 
-> - If using `Firefox`, you will also likely need to install `geckodriver`, which on macOS can be accomplished using [Homebrew](https://brew.sh/) with the command `brew install geckodriver` in terminal.
-> - If using `Edge`, you will need to install `EdgeDriverManager`.
+> - If using `Firefox`, you will also likely need to install `GeckoDriverManager`, which on macOS can be accomplished using [Homebrew](https://brew.sh/) with the command `brew install geckodriver` in terminal.
+> - If using `Edge`, you will need to install `EdgeChromiumDriverManager`.
 
 
 <p align="right"><a href="#top">(back to top)</a></p>
@@ -94,12 +94,12 @@ Edit the text in quotes to your actual username and password. Save the file and 
 
 ### <ins>Firefox and Other Web Drivers</ins>:
 
-The default webdriver for this script is `Firefox`, which was the original web browser used in writing this script and executing the code.\
-From a development perspective `Firefox` offers a better interface to inspect the HTML code needed in writing the scraper.
+The default webdriver for this script is `Chrome`, which was the original web browser used in writing this script and executing the code.\
+From a development perspective `Chrome` offers a better interface to inspect the HTML code needed in writing the scraper.
 
 &nbsp;
 
-However, other webdrivers, *e.g.* `Chrome`, `Safari`, and/or `Edge` may be used. 
+However, other webdrivers, *e.g.* `Safari`, `Firefox`, and/or `Edge` may be used. 
 
 
 To learn more about setting up the appropriate web driver, visit the Selenium web driver documentation [here](https://selenium-python.readthedocs.io/installation.html#drivers).
@@ -132,7 +132,7 @@ __<ins>Note</ins>:__ *If you have several versions of* `python`, *you will need 
 
 There are a variety of optional arguments for the script, including timing, closet scroll size, closet ordering, the account to share, and the webdriver. 
 
-To display the full range of command line arguments type `python share.py --help`. 
+To display the full range of command line arguments type `python3 share.py --help` or `python3 share.py -help`. 
 For convenience, these options are described below.
 
 
@@ -143,8 +143,8 @@ You can adjust the timing from the command line. The default is 7200 seconds (*1
 Using a shorter time period is *__not__ recommended* as it will be more likely caught by both captcha (`I am not a robot`) detection systems either at login or during the actual sharing. 
 
 *Here are some examples:*
-> - Every *four* hours: `python share.py -t 14400`
-> - Every *two* hours: `python share.py -t 7200`
+> - Every *four* hours: `python3 share.py -t 14400`
+> - Every *two* hours: `python3 share.py -t 7200`
 
 
 <p align="right"><a href="#top">(back to top)</a></p>
@@ -158,7 +158,7 @@ The latest version of this code will automatically scroll to the end of your act
 If you desired to share only part of your closet, you could descrease the number of scrolls with the `-n` parameter: 
 
 
-`python share.py -n 1`
+`python3 share.py -n 1`
 
 
 __<ins>Note</ins>:__ *The code above scrolls only 1 time.*
@@ -173,12 +173,12 @@ __<ins>Note</ins>:__ *The code above scrolls only 1 time.*
 To preserve closet order, the closet items must be shared in their reverse order. To this end, the default sorting is `order=True`:
 
 __<ins>*Preserve Closet Order</ins>*:__
-> 1. `python share.py`
-> 2. `python share.py -o True`
+> 1. `python3 share.py`
+> 2. `python3 share.py -o True`
 
 To override this option, you can reverse order the items of the closet with the following flag, `-o False`:
 
-* **Reverse Original Closet Order:** `python share.py -o False`
+* **Reverse Original Closet Order:** `python3 share.py -o False`
 
 
 <p align="right"><a href="#top">(back to top)</a></p>
@@ -190,7 +190,7 @@ To override this option, you can reverse order the items of the closet with the 
 By default, the code will share all the listings for Poshmark account provided in `credentials.py`. 
 
 
-While you will still need your account information in `credentials.py` to login, you may request that the code share the listings of another Poshmark user with the account option: `python share.py -a another_poshmark_closet`.
+While you will still need your account information in `credentials.py` to login, you may request that the code share the listings of another Poshmark user with the account option: `python3 share.py -a another_poshmark_closet`.
 > This can be a useful feature, for example, in becoming a Poshmark ambassador.
 
 
@@ -227,7 +227,7 @@ If you would prefer to not share your entire closet (or another account's entire
 
 
 To do so, add the parameter `-r` followed by a number to your command in the terminal:\
-`python share.py -a another_poshmark_closet -r 25`
+`python3 share.py -a another_poshmark_closet -r 25`
 
 This shares 25 randomly selected items from another closet.
 
@@ -243,10 +243,10 @@ Alternative `Selenium` web drivers may also be specified. Drivers may be called 
 
 
 The full list of *driver names and options* is as follows:
-> - `Firefox` == 0
-> - `Chrome` == 1
-> - `Edge` == 2
-> - `Safari` == 3
+> - `Chrome` == 0
+> - `Safari` == 1
+> - `Firefox` == 2
+> - `Edge` == 3
 
 
 These must be properly installed on your system, otherwise you will encounter an error.
