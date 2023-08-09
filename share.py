@@ -721,44 +721,54 @@ if __name__ == "__main__":
             from the poshmark_sharing repository:
             https://github.com/lyndskg/posh-a-matic
         '''),
-        usage = 'Use "python3 %(prog)s --help" or "python3 share.py -h" for more information.',
+        usage = 'use "python3 %(prog)s --help" or "python3 share.py -h" for more information',
         formatter_class=RawTextArgumentDefaultsHelpFormatter)
+    
     # Add command line arguments for different options
-    parser.add_argument("-ttw", "--timeToWait", default = 7200, type = float, required = False,
-        help = textwrap.dedent('''\
-            The number of seconds to wait after one round of sharing.
+    parser.add_argument("-t", "--time", default=14400, type=float,
+        help=textwrap.dedent('''\
+            loop time in seconds to repeat the code
 
-            :: e.g., repeat every two hours:
+            :: example, repeat every two hours:
             -t 7200
             '''))
-    parser.add_argument("-db", "--debug", default = False, type = bool, required = False,
-        help = "Show debug output.")
-    parser.add_argument("-pdb", "--debugger", default = False, type = bool, required = False,
-        help = "Run with Python Debugger.")
-    parser.add_argument("-sm", "--slowMode", default = False, type = bool, required = False,
-        help = "Run in slow mode.")
-    parser.add_argument("-cc", "--checkCaptcha", default = True, type = bool, required = False,
-        help = "Specify whether or not to check for Captchas.")
-    parser.add_argument("-mo", "--maintainOrder", default = False, type = bool, required = False,
-        help = "Specify whether or not to preserve closet order based on order file.")
-    parser.add_argument("-f", "--file", default = False, type = bool, required = False,
-        help = "Specify whether or not to share closets in closetsToShare.txt.")
-    parser.add_argument("-sb", "--shareBack", default = False, type = bool, required = False,
-        help = "Specify whether or not to share back.")
-    parser.add_argument("-d", "--driver", default = "0", type = str, required = False,
+    parser.add_argument("-n", "--number", default=1000, type=int,
+        help="number of closet scrolls")
+    parser.add_argument("-o", "--order", default=True, type=bool, 
+        help="preserve closet order")
+    parser.add_argument("-r", "--random_subset", default=0, type=int, 
+        help="select a random subset (number) of items to share")
+    parser.add_argument("-a", "--account", default=poshmark_username, 
+        type=str,help=textwrap.dedent('''\
+            the poshmark closet account you want to share
+            (default is the login account in credentials.py)
+
+            :: example, share another user's closet items:
+            -a another_username
+            '''))
+    parser.add_argument("-b", "--bypass", default=False, type=bool, 
         help=textwrap.dedent('''\
-            Selenium WebDriver selection
-                             
-            Drivers may be called by either entering the name
-            of the driver, or by entering the numeric code 
+            option to bypass user confirmation
+            by default, if the account to be shared is not equal
+            to the poshmark username, the user will be prompted to 
+            confirm this selection
+
+            :: example, bypass user confirmation
+            -b True
+            '''))
+    parser.add_argument("-d", "--driver", default='0', type=str, 
+        help=textwrap.dedent('''\
+            selenium web driver selection
+            drivers may be called by either entering the name
+            of the driver or entering the numeric code 
             for that driver name as follows:
             Chrome == 0, Safari == 1, Firefox == 2, Edge == 3
 
-            :: e.g., use Firefox:
+            :: example, use Firefox:
             -d Firefox 
             -d 2
 
-            :: e.g., use Chrome:
+            :: example, use Chrome:
             -d Chrome
             -d 0
             '''))
@@ -767,7 +777,10 @@ if __name__ == "__main__":
     # Parse the command line arguments
     args = parser.parse_args()
 
-
+    # Handle case when account is not provided, use the one from credentials.py
+    if args.account is None:
+        args.account = credentials.poshmark_username
+    
     ##################################
     ## Run Script
     ##################################
@@ -851,4 +864,3 @@ if __name__ == "__main__":
 
     driver.quit()
     sys.exit()
-    
