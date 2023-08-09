@@ -140,3 +140,91 @@ console.warn: LoginRecipes: "Falling back to a synchronous message for: https://
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
 console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691571648551	geckodriver	INFO	Listening on 127.0.0.1:57831
+1691571649072	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofileIVOihq"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691571649339	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691571649429	Marionette	INFO	Listening on port 57837
+Read port: 57837
+WebDriver BiDi listening on ws://127.0.0.1:57832
+1691571649520	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:57832/devtools/browser/30ef8a1a-177b-41cb-939c-dd10afda3afe
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.error: "Unable to find target with innerWindowId:6442450945"
+console.warn: "Listener for event 'frame' did not return a promise."
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+console.warn: "Listener for event 'frame' did not return a promise."
+console.error: "Unable to find target with innerWindowId:6442450955"
+console.error: "Unable to find target with innerWindowId:6442450955"
+console.error: "Unable to find target with innerWindowId:6442450956"
+console.error: "Unable to find target with innerWindowId:6442450956"
+console.warn: "Listener for event 'frame' did not return a promise."
+console.error: (new TypeError("watcher.browserElement.browsingContext is null", "resource://devtools/server/actors/watcher/target-helpers/frame-helper.js", 193))
+1691572537774	geckodriver	INFO	Listening on 127.0.0.1:58139
+1691572538290	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofileDGjswE"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691572538563	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691572538661	Marionette	INFO	Listening on port 58145
+Read port: 58145
+WebDriver BiDi listening on ws://127.0.0.1:58140
+1691572538748	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:58140/devtools/browser/7c31f76d-6939-4c8e-8d81-a1bed322016a
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.error: "Unable to find target with innerWindowId:6442450945"
+console.error: "Unable to find target with innerWindowId:6442450945"
+console.error: "Unable to find target with innerWindowId:6442450945"
+JavaScript warning: https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js, line 2: Script terminated by timeout at:
+_u/<@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:788520
+EventListener.handleEvent*Gu/<@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:790932
+Gu@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:790902
+Wu@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:790750
+Hp@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:827651
+Wp/a<@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:828111
+Wp@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:828423
+Qp/i<@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:831130
+Qp@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:831221
+tf@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:834480
+pf<@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:840810
+g@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:837550
+p.init<@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:837492
+yu@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:788584
+_u/<@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:788530
+@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:842373
+t@https://d2gjrq7hs8he14.cloudfront.net/webpack4/runtime~app.f637b2b32d00f129d441.js:1:573
+c@https://d2gjrq7hs8he14.cloudfront.net/webpack4/runtime~app.f637b2b32d00f129d441.js:1:430
+a@https://d2gjrq7hs8he14.cloudfront.net/webpack4/runtime~app.f637b2b32d00f129d441.js:1:293
+@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:47
+
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript warning: https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js, line 2: Script terminated by timeout at:
+_u/<@https://d2gjrq7hs8he14.cloudfront.net/webpack4/app.4a4f5db96ea49ce56d19.js:2:788520
+
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691572989503	geckodriver	INFO	Listening on 127.0.0.1:58379
+1691572990032	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofilee4CVoD"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691572990323	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691572990498	Marionette	INFO	Listening on port 58387
+WebDriver BiDi listening on ws://127.0.0.1:58380
+Read port: 58387
+1691572990614	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:58380/devtools/browser/fd863ac4-0351-426c-8e11-813960252d8a
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
