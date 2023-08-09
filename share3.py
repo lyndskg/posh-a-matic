@@ -8,10 +8,11 @@ import sys
 import textwrap
 import time
 import credentials 
+import pdb
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -188,7 +189,7 @@ class PoshAMatic:
         else:
             self.orderTextFile = ""
         self.closetsToShareFile = "closetsToShare.txt"
-        self.availableUrl = self.getClosetAvailableUrl(self.username)
+        self.availableUrl = self.getClosetAvailableUrl(self.poshmark_username)
         self.hasUpdate = False # used when preserving closet order to keep track of newly added item
         self.closetSize = 0
         self.shareButtons = []
@@ -210,21 +211,21 @@ class PoshAMatic:
 
     # Modify the login function
     def login(self, debugger = False):
-        # Set the maximum number of retries
-        max_retries = 5 
-        retries = 0
-        
         # If debugger flag is True, enable Python debugger (pdb)
         if debugger is True:
             import pdb; pdb.set_trace()
         else:
             pass # Otherwise, continue without debugger
 
+        # Set the maximum number of retries
+        max_retries = 5 
+        retries = 0
+        
         # URL of the Poshmark login page
         url = "https://poshmark.com/login"
-        driver.get(url) # Open the URL in the driver's browser
+        self.driver.get(url) # Open the URL in the driver's browser
 
-        time.sleep(get_random_delay(5)) # Wait for a random delay before proceeding
+        time.sleep(random.random()) # Wait for a random delay before proceeding
 
         # Attempt login with retry mechanism
         while retries < max_retries:
@@ -240,17 +241,39 @@ class PoshAMatic:
                         The share war will begin momentarily...
                     '''.format(poshmark_username)))
                 
-                username = driver.find_element(By.NAME, "login_form[username_email]")
-                username.send_keys(poshmark_username)
+                self.enterUsername()
+                self.enterAndSubmitPassword()
 
-                time.sleep(get_random_delay(5))
+                
+                try:
+                    self.username = self.driver.find_element(By.NAME, "login_form[username_email]")
+                    logger.info("Username obtained")
+
+                    if not self.username:
+                        raise ValueError 
+                
+                    for c in poshmark_username:
+                        self.username.send_keys(c)
+                        time.sleep(random.random())
+                except ValueError: 
+                    print("Username element not obtained from page. Exiting...")
+                    self.quit()
+                    sys.exit()
+                except Exception as e:
+                    print("Username element not obtained from page. Exiting...")
+                    self.quit()
+                    sys.exit()
+
+                self.username.send_keys(poshmark_username)
+
+                time.sleep(random.random())
 
                 password = driver.find_element(By.NAME, "login_form[password]")
                 password.send_keys(poshmark_password)
-                time.sleep(get_random_delay(5))
+                time.sleep(random.random())
 
                 password.send_keys(Keys.RETURN)
-                time.sleep(get_random_delay(5))
+                time.sleep(random.random())
             
                 ## Check for Captcha
                 try:
@@ -295,7 +318,7 @@ class PoshAMatic:
 
                 retries += 1  # Increment the retries counter
 
-                time.sleep(get_random_delay(30)) # Wait for a few seconds before retrying
+                time.sleep(random.random()) # Wait for a few seconds before retrying
 
         else:
             # The loop completed without successful login, handle the situation accordingly
@@ -304,7 +327,7 @@ class PoshAMatic:
             sys.exit(-5)
         
         # Continue with the rest of the login process
-        time.sleep(get_random_delay(10))
+        time.sleep(random.random())
 
         seller_page = get_seller_page_url(args.account)
         driver.get(seller_page)
@@ -325,6 +348,46 @@ class PoshAMatic:
                 pass
                     
         return True
+    
+    def enterAndSubmitPassword(self):
+        passwordElt = self.getLoginElt(self.passwordID, self.passwordXPath)
+        if not passwordElt:
+            print("Password element not obtained from page, exiting...")
+            self.quit()
+            sys.exit()
+        self.enterTxtSlowly(passwordElt, self.password)
+        passwordElt.submit()
+
+
+    def getLoginElt(self, eltID, eltXPath):
+        elt = self.waitTilClickable("id", eltID)
+        if not elt:
+            print("Timed out while locating ID: " + eltID)
+            elt = self.waitTilClickable("xpath", eltXPath)
+            if not elt:
+                print("Timed out again with XPath.")
+                print("Please manually enter username and password, then type 'c' or 'continue'")
+                pdb.set_trace()
+        return elt
+
+
+    def waitTilClickable(self, findByIdOrPath, idOrPath, timeOutSecs = 10):
+      clickableElt = False
+      if findByIdOrPath == 'id':
+         try:
+            clickableElt = WebDriverWait(self.driver, timeOutSecs).until(EC.element_to_be_clickable((By.ID, idOrPath)))
+         except TimeoutException as e:
+            print("Timed out at locating element by " + findByIdOrPath + " at " + str(idOrPath) + ": " + str(e))
+            return False
+      else:
+         try:
+            clickableElt = WebDriverWait(self.driver, timeOutSecs).until(EC.element_to_be_clickable((By.XPATH, idOrPath)))
+         except TimeoutException as e:
+            print("Timed out at locating element by " + findByIdOrPath + " at " + str(idOrPath) + ": " + str(e))
+            return False
+      return clickableElt
+    
+
     # Add the handle_captcha function
     def handle_captcha():
 
@@ -525,7 +588,7 @@ class PoshAMatic:
 
 
     # Define the get_random_delay function
-    def get_random_delay(mean_delay):
+    def get_random_delay(self, mean_delay):
         # Generate a list of random times, adding two random values and the mean delay
         times = np.random.rand(1000) + np.random.rand(1000) + mean_delay
     
@@ -534,13 +597,13 @@ class PoshAMatic:
 
 
     # Define the get_random_delay_for_interaction function
-    def get_random_delay_for_interaction(mean_delay):
+    def get_random_delay_for_interaction(self, mean_delay):
         # Call the get_random_delay function to get a random delay
         return get_random_delay(mean_delay)
 
 
     # Define the confirm_account_sharing function
-    def confirm_account_sharing(account, username):
+    def confirm_account_sharing(self, account, username):
         try:
             # Get user input for confirming account sharing request
             logger.info(textwrap.dedent('''
@@ -623,7 +686,7 @@ class PoshAMatic:
                     return  # Reached the end of the page, exit
                 else:
                     screen_heights.append(height)
-                    time.sleep(get_random_delay(delay))  # Pause with random delay
+                    time.sleep(random.random())  # Pause with random delay
     
         except Exception as e:
             # Catch and log any exceptions that occurred during page scrolling
@@ -666,14 +729,14 @@ class PoshAMatic:
         try:
             ## First share click
             driver.execute_script("arguments[0].click();", share_icon); 
-            time.sleep(get_random_delay(d))
+            time.sleep(random.random())
 
             ## Second share click
             share_pat = "//a[@class='pm-followers-share-link grey']"
             share_followers = driver.find_element(By.XPATH, "share_pat")
             
             driver.execute_script("arguments[0].click();", share_followers); 
-            time.sleep(get_random_delay(d))
+            time.sleep(random.random())
         
         except Exception as e:
             # Handle any exceptions that occurred during clicking share icons
@@ -690,7 +753,7 @@ class PoshAMatic:
 
         # Open the provided URL and wait for a random delay
         driver.get(url)
-        time.sleep(get_random_delay(5))
+        time.sleep(random.random())
 
 
 
@@ -866,10 +929,10 @@ if __name__ == "__main__":
             if quit_input:
                 break
 
-            time.sleep(get_random_delay(10))
+            time.sleep(random.random())
             driver.close()
 
-            time.sleep(get_random_delay(random_loop_time - ((time.time() - starttime) % random_loop_time)))
+            time.sleep(random.random())
 
 
         except NoSuchElementException as e:
@@ -896,7 +959,7 @@ if __name__ == "__main__":
                 pass
             else:
                 # Sleep for some time before retrying
-                time.sleep(get_random_delay(30))
+                time.sleep(random.random())
                 
             # Retry loop
             retries = 0
@@ -909,7 +972,7 @@ if __name__ == "__main__":
                     logger.error("ERROR (Retry %d): %s", retries + 1, e)
                     print("ERROR (Retry %d): %s", retries + 1, e)
 
-                    time.sleep(get_random_delay(30))
+                    time.sleep(random.random())
                 
             else:
                 # The loop completed without success, handle the situation accordingly
