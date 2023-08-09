@@ -1,0 +1,142 @@
+1691569285490	geckodriver	INFO	Listening on 127.0.0.1:56360
+1691569286006	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofilebmnhuT"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691569286375	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691569286600	Marionette	INFO	Listening on port 56367
+WebDriver BiDi listening on ws://127.0.0.1:56361
+Read port: 56367
+1691569286803	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:56361/devtools/browser/2ad6276d-26bd-4079-b288-c8dee9a2acee
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691569316638	geckodriver	INFO	Listening on 127.0.0.1:56501
+1691569317148	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofileiVOuVY"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691569317443	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691569317624	Marionette	INFO	Listening on port 56507
+WebDriver BiDi listening on ws://127.0.0.1:56502
+Read port: 56507
+1691569317746	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:56502/devtools/browser/d32ae793-78fb-4dae-bc0e-11e32fe158d2
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691569484541	geckodriver	INFO	Listening on 127.0.0.1:56650
+1691569485062	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofilerSsACY"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691569485338	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691569485434	Marionette	INFO	Listening on port 56656
+Read port: 56656
+WebDriver BiDi listening on ws://127.0.0.1:56651
+1691569485527	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:56651/devtools/browser/3f36d658-ef8e-44c3-937b-64c6c9af439e
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691569849750	geckodriver	INFO	Listening on 127.0.0.1:56803
+1691569850264	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofileHr9tbx"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691569850507	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691569850603	Marionette	INFO	Listening on port 56809
+WebDriver BiDi listening on ws://127.0.0.1:56804
+Read port: 56809
+1691569850742	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:56804/devtools/browser/8291deb2-2506-44d6-af82-bddb4526b029
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691570048452	geckodriver	INFO	Listening on 127.0.0.1:56959
+1691570048965	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofileq9ns6N"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691570049225	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691570049400	Marionette	INFO	Listening on port 56965
+WebDriver BiDi listening on ws://127.0.0.1:56960
+Read port: 56965
+1691570049508	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:56960/devtools/browser/b91c83f5-ad1c-4b68-ab74-b992acf0b1b9
+1691570058258	geckodriver	INFO	Listening on 127.0.0.1:57006
+1691570058768	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofiledBDUnZ"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691570059032	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691570059211	Marionette	INFO	Listening on port 57012
+WebDriver BiDi listening on ws://127.0.0.1:57007
+Read port: 57012
+1691570059326	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:57007/devtools/browser/423a1563-241c-4d4e-bb8b-885169552347
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691570350608	geckodriver	INFO	Listening on 127.0.0.1:57167
+1691570351127	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofilex6SBwv"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691570351387	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691570351479	Marionette	INFO	Listening on port 57173
+Read port: 57173
+WebDriver BiDi listening on ws://127.0.0.1:57168
+1691570351568	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:57168/devtools/browser/ba5723ee-a6bc-4061-a91c-c07e95e052f9
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691570466904	geckodriver	INFO	Listening on 127.0.0.1:57325
+1691570467417	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofileSbR5JP"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691570467685	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691570467777	Marionette	INFO	Listening on port 57331
+Read port: 57331
+WebDriver BiDi listening on ws://127.0.0.1:57326
+1691570467866	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:57326/devtools/browser/f0f824b1-d857-4755-8202-1b5e00d9f345
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691570502029	geckodriver	INFO	Listening on 127.0.0.1:57461
+1691570502546	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofilef6NhO8"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691570502806	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691570502972	Marionette	INFO	Listening on port 57467
+WebDriver BiDi listening on ws://127.0.0.1:57462
+Read port: 57467
+1691570503129	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:57462/devtools/browser/615d618b-3345-4d39-80a4-821510c93903
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+1691570699272	geckodriver	INFO	Listening on 127.0.0.1:57626
+1691570699787	mozrunner::runner	INFO	Running command: MOZ_CRASHREPORTER="1" MOZ_CRASHREPORTER_NO_REPORT="1" MOZ_CRASHREPORTER_SHUTDOWN="1" MOZ_NO_REMOTE="1" "/App ... s" "localhost" "-foreground" "-no-remote" "-profile" "/var/folders/2k/1zjkt82s4j12s0hx2bfmmsl80000gn/T/rust_mozprofileHAXNRn"
+console.warn: services.settings: Ignoring preference override of remote settings server
+console.warn: services.settings: Allow by setting MOZ_REMOTE_SETTINGS_DEVTOOLS=1 in the environment
+1691570700060	Marionette	INFO	Marionette enabled
+console.error: "Warning: unrecognized command line flag" "-remote-allow-hosts"
+1691570700154	Marionette	INFO	Listening on port 57632
+Read port: 57632
+WebDriver BiDi listening on ws://127.0.0.1:57627
+1691570700249	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+UNSUPPORTED (log once): POSSIBLE ISSUE: unit 1 GLD_TEXTURE_INDEX_2D is unloadable and bound to sampler type (Float) - using zero texture because texture unloadable
+DevTools listening on ws://127.0.0.1:57627/devtools/browser/11d32899-6cd7-4f58-9a7c-2bc8af174235
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://poshmark.com."
