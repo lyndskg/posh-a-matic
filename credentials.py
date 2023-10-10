@@ -1,2 +1,2 @@
-poshmark_username = "lyndskgg"
-poshmark_password = "Empoleon33900449"
+poshmark_username = "username"
+poshmark_password = "password"
